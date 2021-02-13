@@ -1,0 +1,170 @@
+openapi: 3.0.3
+
+info:
+  title: Mock EPL Server
+  description: "This is the API server documentation for our mock EPL API."
+  contact:
+    email: barry.jonathanks@gmail.com
+  version: 0.0.1
+
+externalDocs:
+  description: Find out more about this API
+  url: https://github.com/random-guys/backend-developer-test
+
+servers:
+  - url: ""
+  - url: http://localhost:{port}
+    description: Local development server
+    variables:
+      port:
+        default: "8080"
+        description: The service port at which the API listens
+tags:
+  - name: admin-accounts
+    description: Everything about managing admin accounts.
+    externalDocs:
+      description: Find out more
+      url: https://github.com/random-guys/backend-developer-test#user-types
+
+  - name: user-accounts
+    description: Everything about managing user accounts.
+    externalDocs:
+      description: Find out more
+      url: https://github.com/random-guys/backend-developer-test#user-types
+
+paths:
+  /signup/admins/:
+    post:
+      tags:
+        - admin-accounts
+      summary: Create a new admin account
+      operationId: admin_signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminSignupDto"
+      responses:
+        201:
+          description: Admin account created.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/_DataResponse"
+                  - properties:
+                      data:
+                        $ref: "#/components/schemas/Administrator"
+        400:
+          description: The request failed validation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationError"
+
+components:
+
+  requestBodies: {}
+
+  schemas:
+    BasicUserInfo:
+      type: object
+      properties:
+        first_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        last_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+      required:
+        - first_name
+        - last_name
+        - email
+
+    AdminSignupDto:
+      description: Information required for admin sign up.
+      allOf:
+        - $ref: "#/components/schemas/BasicUserInfo"
+        - properties:
+            password:
+              type: string
+          required:
+            - password
+
+    Administrator:
+      description: A user with privileged access.
+      allOf:
+        - $ref: "#/components/schemas/_Entity"
+        - $ref: "#/components/schemas/BasicUserInfo"
+
+    _DataResponse:
+      description: An API response containing data.
+      properties:
+        "@type":
+          type: string
+          description: The resource type returned.
+        message:
+          type: string
+          description: Information about the response.
+        data: {}
+
+      required:
+        - "@type"
+        - data
+
+    _Entity:
+      description: Default fields for stable entities.
+      type: object
+      properties:
+        id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - id
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+    ValidationError:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  target:
+                    type: string
+                required:
+                  - message
+                  - target
+
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: bearer
+      in: header
