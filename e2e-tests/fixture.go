@@ -35,14 +35,18 @@ func connectToDB(mongoURL string) *mongo.Client {
 }
 
 type testFixtures struct {
-	adminsDB *users.AdminsDB
-	app      *web.Application
+	app *web.Application
 }
 
 var (
 	testAdmin = &users.Administrator{
 		Email:     "jon.doe@gomoney.local",
 		FirstName: "Jon",
+		LastName:  "Doe",
+	}
+	testUser = &users.User{
+		Email:     "jane.doe@gomoney.local",
+		FirstName: "Jane",
 		LastName:  "Doe",
 	}
 	testPassword = "password"
@@ -56,7 +60,19 @@ func (t testFixtures) setUpAdminAccount() error {
 		Password:  testPassword,
 	}
 	var err error
-	testAdmin, err = users.SignUpAdmin(context.Background(), intent, *t.adminsDB)
+	testAdmin, err = users.SignUpAdmin(context.Background(), intent, *t.app.AdminDB)
+	return err
+}
+
+func (t testFixtures) setUpUserAccount() error {
+	intent := users.SignUpIntent{
+		Email:     testUser.Email,
+		FirstName: testUser.FirstName,
+		LastName:  testUser.LastName,
+		Password:  testPassword,
+	}
+	var err error
+	testUser, err = users.SignUpUser(context.Background(), intent, *t.app.UsersDB)
 	return err
 }
 
@@ -76,10 +92,8 @@ func setUpFixtures() *testFixtures {
 		panic(err)
 	}
 
-	web.AdminSignupRoute(*app.AdminDB)(app.Echo)
 	fixture := testFixtures{
-		app:      app,
-		adminsDB: app.AdminDB,
+		app: app,
 	}
 
 	return &fixture

@@ -18,6 +18,7 @@ type Application struct {
 	DBClient  *mongo.Client
 	DefaultDB *mongo.Database
 	AdminDB   *users.AdminsDB
+	UsersDB   *users.UsersDB
 	*echo.Echo
 }
 
@@ -25,16 +26,24 @@ func NewApplication(db *mongo.Client, cfg config.Config) (*Application, error) {
 	defaultDB := db.Database(database.MockEPLDatabase)
 	adminsCollection := defaultDB.Collection("admin_accounts")
 	adminsDB := users.AdminsDB{Collection: adminsCollection}
+	usersCollection := defaultDB.Collection("admin_accounts")
+	usersDB := users.UsersDB{Collection: usersCollection}
 
 	e := echo.New()
 	e.HTTPErrorHandler = DefaultErrorHandler
 	e.Server.Addr = fmt.Sprintf(":%d", cfg.HttpBindPort)
 
-	return &Application{
+	app := &Application{
 		AdminDB:   &adminsDB,
 		Config:    &cfg,
 		DBClient:  db,
 		DefaultDB: defaultDB,
 		Echo:      e,
-	}, nil
+		UsersDB:   &usersDB,
+	}
+
+	AdminSignupRoute(*app.AdminDB)(app.Echo)
+	UserAuthRoute(*app.UsersDB)(app.Echo)
+
+	return app, nil
 }

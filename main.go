@@ -28,8 +28,6 @@ func main() {
 	}
 	defer app.DBClient.Disconnect(context.Background())
 
-	web.AdminSignupRoute(*app.AdminDB)(app.Echo)
-
 	if err := graceful.ListenAndServe(app.Echo.Server, 10*time.Second); err != nil {
 		log.Fatalf("error: %v\n", err)
 	}

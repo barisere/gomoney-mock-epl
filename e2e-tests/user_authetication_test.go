@@ -53,7 +53,7 @@ func Test_creating_admin_account(t *testing.T) {
 		result := rec.Result()
 		assert.Equal(t, http.StatusCreated, result.StatusCode)
 		assert.NoError(t, readJsonResponse(result.Body, &response))
-		assertThatAdminAccountWasCreated(t, fixture.adminsDB, response.Data.(map[string]interface{})["id"].(string))
+		assertThatAdminAccountWasCreated(t, fixture.app.AdminDB, response.Data.(map[string]interface{})["id"].(string))
 	})
 }
 
@@ -80,6 +80,64 @@ func Test_admin_login(t *testing.T) {
 
 	t.Run("succeeds given correct credentials", func(t *testing.T) {
 		result := loginAsAdmin(loginDto, *fixture).Result()
+		response := web.DataDto{}
+		assert.NoError(t, readJsonResponse(result.Body, &response))
+		token := response.Data.(map[string]interface{})["token"].(string)
+		assert.NotEmpty(t, token)
+	})
+}
+
+func Test_creating_user_account(t *testing.T) {
+	var intent = users.SignUpIntent{
+		Email:     "victor@gomoney.local",
+		FirstName: "Victor",
+		LastName:  "Alabi",
+		Password:  "really strong, 123456",
+	}
+
+	reqBody, _ := json.Marshal(&intent)
+	fixture := setUpFixtures()
+	fixture.setUpUserAccount()
+	defer fixture.destroy(context.Background())
+
+	req, rec := jsonRequest(http.MethodPost, "/signup/users/", bytes.NewReader(reqBody), "")
+	fixture.app.ServeHTTP(rec, req)
+	response := web.DataDto{}
+	result := rec.Result()
+	assert.Equal(t, http.StatusCreated, result.StatusCode)
+	assert.NoError(t, readJsonResponse(result.Body, &response))
+	assertThatAdminAccountWasCreated(t, fixture.app.AdminDB, response.Data.(map[string]interface{})["id"].(string))
+}
+
+func loginAsUser(dto users.LoginDto, fixture testFixtures) *httptest.ResponseRecorder {
+	reqBody, _ := json.Marshal(&dto)
+	req, rec := jsonRequest(http.MethodPost, "/login/users/", bytes.NewReader(reqBody), "")
+	fixture.app.ServeHTTP(rec, req)
+	return rec
+}
+
+func assertThatUserAccountWasCreated(t *testing.T, db *users.UsersDB, accountID string) {
+	user, err := db.ByID(context.Background(), accountID)
+	assert.Nil(t, err, "Unexpected error retrieving account")
+	assert.NotEmpty(t, user, "User account was not saved to DB")
+}
+
+func Test_user_login(t *testing.T) {
+	fixture := setUpFixtures()
+	assert.NoError(t, fixture.setUpUserAccount())
+	loginDto := users.LoginDto{
+		Email:    testAdmin.Email,
+		Password: testPassword,
+	}
+	defer fixture.destroy(context.Background())
+
+	t.Run("fails for invalid credentials", func(t *testing.T) {
+		result := loginAsUser(users.LoginDto{}, *fixture).Result()
+		assert.Equal(t, http.StatusUnauthorized, result.StatusCode)
+	})
+
+	t.Run("succeeds given correct credentials", func(t *testing.T) {
+		result := loginAsUser(loginDto, *fixture).Result()
 		response := web.DataDto{}
 		assert.NoError(t, readJsonResponse(result.Body, &response))
 		token := response.Data.(map[string]interface{})["token"].(string)
