@@ -61,7 +61,7 @@ func adminLoginHandler(db users.AdminsDB) echo.HandlerFunc {
 
 func AdminSignupRoute(db users.AdminsDB) RouteProvider {
 	return func(e *echo.Echo) {
-		e.POST("/signup/admins/", adminSignUpHandler(db), jwtMiddleware)
+		e.POST("/signup/admins/", adminSignUpHandler(db), jwtMiddleware, onlyAdmins)
 		e.POST("/login/admins/", adminLoginHandler(db))
 	}
 }

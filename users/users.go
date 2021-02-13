@@ -53,9 +53,5 @@ func LoginAsUser(ctx context.Context, db UsersDB, dto LoginDto) (*jwt.Token, err
 	if err != nil {
 		return nil, ErrIncorrectLogin
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"is_admin": false,
-		"id":       user.ID,
-	})
-	return token, nil
+	return makeJWT(JwtRequest{subject: user.ID, IsAdmin: false}), nil
 }

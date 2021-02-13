@@ -63,9 +63,5 @@ func LoginAsAdmin(ctx context.Context, db AdminsDB, dto LoginDto) (*jwt.Token, e
 	if err != nil {
 		return nil, ErrIncorrectLogin
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"is_admin": true,
-		"id":       admin.ID,
-	})
-	return token, nil
+	return makeJWT(JwtRequest{subject: admin.ID, IsAdmin: true}), nil
 }
