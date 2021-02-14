@@ -14,6 +14,7 @@ const (
 	MockEPLDatabase  = "mock_epl"
 	AdminsCollection = "admins"
 	UsersCollection  = "users"
+	TeamsCollection  = "teams"
 )
 
 func ConnectToDB(mongoURL string) (*mongo.Client, error) {

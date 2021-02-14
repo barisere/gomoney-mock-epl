@@ -20,7 +20,7 @@ var adminToken string
 func TestMain(m *testing.M) {
 	fixture = setUpFixtures()
 	loginResult := loginAsAdmin(users.LoginDto{
-		Email:    testAdmin.Email,
+		Email:    testAdminEmail,
 		Password: testPassword,
 	}, *fixture).Result()
 	loginResponse := web.DataDto{}
@@ -32,7 +32,7 @@ func TestMain(m *testing.M) {
 	os.Exit(exitCode)
 }
 
-func assertThatAdminAccountWasCreated(t *testing.T, db *users.AdminsDB, accountID string) {
+func assertThatAdminAccountWasCreated(t *testing.T, db users.AdminsDB, accountID string) {
 	admin, err := db.ByID(context.Background(), accountID)
 	assert.Nil(t, err, "Unexpected error retrieving account")
 	assert.NotEmpty(t, admin, "Admin account was not saved to DB")
@@ -46,17 +46,15 @@ func Test_creating_admin_account(t *testing.T) {
 		Password:  "really strong, 123456",
 	}
 
-	reqBody, _ := json.Marshal(&intent)
-
 	t.Run("fails given invalid admin authentication", func(t *testing.T) {
-		req, rec := jsonRequest(http.MethodPost, "/signup/admins/", bytes.NewReader(reqBody), "")
+		req, rec := jsonRequest(http.MethodPost, "/signup/admins/", &intent, "")
 		fixture.app.ServeHTTP(rec, req)
 		result := rec.Result()
 		assert.Equal(t, http.StatusUnauthorized, result.StatusCode)
 	})
 
 	t.Run("succeeds given valid admin authentication", func(t *testing.T) {
-		req, rec := jsonRequest(http.MethodPost, "/signup/admins/", bytes.NewReader(reqBody), adminToken)
+		req, rec := jsonRequest(http.MethodPost, "/signup/admins/", &intent, adminToken)
 		fixture.app.ServeHTTP(rec, req)
 		response := web.DataDto{}
 		result := rec.Result()
@@ -67,15 +65,14 @@ func Test_creating_admin_account(t *testing.T) {
 }
 
 func loginAsAdmin(dto users.LoginDto, fixture testFixtures) *httptest.ResponseRecorder {
-	reqBody, _ := json.Marshal(&dto)
-	req, rec := jsonRequest(http.MethodPost, "/login/admins/", bytes.NewReader(reqBody), "")
+	req, rec := jsonRequest(http.MethodPost, "/login/admins/", &dto, "")
 	fixture.app.ServeHTTP(rec, req)
 	return rec
 }
 
 func Test_admin_login(t *testing.T) {
 	loginDto := users.LoginDto{
-		Email:    testAdmin.Email,
+		Email:    testAdminEmail,
 		Password: testPassword,
 	}
 
@@ -119,7 +116,7 @@ func loginAsUser(dto users.LoginDto, fixture testFixtures) *httptest.ResponseRec
 	return rec
 }
 
-func assertThatUserAccountWasCreated(t *testing.T, db *users.UsersDB, accountID string) {
+func assertThatUserAccountWasCreated(t *testing.T, db users.UsersDB, accountID string) {
 	user, err := db.ByID(context.Background(), accountID)
 	assert.Nil(t, err, "Unexpected error retrieving account")
 	assert.NotEmpty(t, user, "User account was not saved to DB")

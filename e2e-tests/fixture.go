@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -18,29 +19,27 @@ type testFixtures struct {
 	app *web.Application
 }
 
+const (
+	testAdminEmail = "jon.doe@gomoney.local"
+	testPassword   = "password"
+)
+
 var (
-	testAdmin = &users.Administrator{
-		Email:     "jon.doe@gomoney.local",
-		FirstName: "Jon",
-		LastName:  "Doe",
-	}
 	testUser = &users.User{
 		Email:     "jane.doe@gomoney.local",
 		FirstName: "Jane",
 		LastName:  "Doe",
 	}
-	testPassword = "password"
 )
 
 func (t testFixtures) setUpAdminAccount() error {
 	intent := users.SignUpIntent{
-		Email:     testAdmin.Email,
-		FirstName: testAdmin.FirstName,
-		LastName:  testAdmin.LastName,
+		Email:     testAdminEmail,
+		FirstName: "Jon",
+		LastName:  "Doe",
 		Password:  testPassword,
 	}
-	var err error
-	testAdmin, err = users.SignUpAdmin(context.Background(), intent, *t.app.AdminDB)
+	_, err := users.SignUpAdmin(context.Background(), intent, t.app.AdminDB)
 	return err
 }
 
@@ -52,7 +51,7 @@ func (t testFixtures) setUpUserAccount() error {
 		Password:  testPassword,
 	}
 	var err error
-	testUser, err = users.SignUpUser(context.Background(), intent, *t.app.UsersDB)
+	testUser, err = users.SignUpUser(context.Background(), intent, t.app.UsersDB)
 	return err
 }
 
@@ -85,9 +84,10 @@ func setUpFixtures() *testFixtures {
 	return &fixture
 }
 
-func jsonRequest(method, path string, body io.Reader, token string) (*http.Request, *httptest.ResponseRecorder) {
+func jsonRequest(method, path string, data interface{}, token string) (*http.Request, *httptest.ResponseRecorder) {
+	body, _ := json.Marshal(data)
 	rec := httptest.NewRecorder()
-	req := httptest.NewRequest(method, path, body)
+	req := httptest.NewRequest(method, path, bytes.NewReader(body))
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
 
