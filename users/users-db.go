@@ -3,6 +3,7 @@ package users
 import (
 	"context"
 	"errors"
+	"gomoney-mock-epl/database"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -18,6 +19,9 @@ type UsersDB struct {
 func (db UsersDB) Create(ctx context.Context, user User) (*User, error) {
 	user.ID = primitive.NewObjectID().Hex()
 	_, err := db.InsertOne(ctx, &user, options.InsertOne().SetBypassDocumentValidation(false))
+	if database.IsDuplicateKeyError(err) {
+		return nil, ErrEmailTaken
+	}
 	return &user, err
 }
 

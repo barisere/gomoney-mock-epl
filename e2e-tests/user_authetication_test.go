@@ -8,10 +8,29 @@ import (
 	"gomoney-mock-epl/web"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+var fixture *testFixtures
+var adminToken string
+
+func TestMain(m *testing.M) {
+	fixture = setUpFixtures()
+	loginResult := loginAsAdmin(users.LoginDto{
+		Email:    testAdmin.Email,
+		Password: testPassword,
+	}, *fixture).Result()
+	loginResponse := web.DataDto{}
+	readJsonResponse(loginResult.Body, &loginResponse)
+	adminToken = loginResponse.Data.(map[string]interface{})["token"].(string)
+
+	exitCode := m.Run()
+	fixture.destroy(context.Background())
+	os.Exit(exitCode)
+}
 
 func assertThatAdminAccountWasCreated(t *testing.T, db *users.AdminsDB, accountID string) {
 	admin, err := db.ByID(context.Background(), accountID)
@@ -28,9 +47,6 @@ func Test_creating_admin_account(t *testing.T) {
 	}
 
 	reqBody, _ := json.Marshal(&intent)
-	fixture := setUpFixtures()
-	assert.NoError(t, fixture.setUpAdminAccount())
-	defer fixture.destroy(context.Background())
 
 	t.Run("fails given invalid admin authentication", func(t *testing.T) {
 		req, rec := jsonRequest(http.MethodPost, "/signup/admins/", bytes.NewReader(reqBody), "")
@@ -40,14 +56,7 @@ func Test_creating_admin_account(t *testing.T) {
 	})
 
 	t.Run("succeeds given valid admin authentication", func(t *testing.T) {
-		loginResult := loginAsAdmin(users.LoginDto{
-			Email:    testAdmin.Email,
-			Password: testPassword,
-		}, *fixture).Result()
-		loginResponse := web.DataDto{}
-		assert.NoError(t, readJsonResponse(loginResult.Body, &loginResponse))
-		token := loginResponse.Data.(map[string]interface{})["token"].(string)
-		req, rec := jsonRequest(http.MethodPost, "/signup/admins/", bytes.NewReader(reqBody), token)
+		req, rec := jsonRequest(http.MethodPost, "/signup/admins/", bytes.NewReader(reqBody), adminToken)
 		fixture.app.ServeHTTP(rec, req)
 		response := web.DataDto{}
 		result := rec.Result()
@@ -65,13 +74,10 @@ func loginAsAdmin(dto users.LoginDto, fixture testFixtures) *httptest.ResponseRe
 }
 
 func Test_admin_login(t *testing.T) {
-	fixture := setUpFixtures()
-	assert.NoError(t, fixture.setUpAdminAccount())
 	loginDto := users.LoginDto{
 		Email:    testAdmin.Email,
 		Password: testPassword,
 	}
-	defer fixture.destroy(context.Background())
 
 	t.Run("fails for invalid credentials", func(t *testing.T) {
 		result := loginAsAdmin(users.LoginDto{}, *fixture).Result()
@@ -96,9 +102,6 @@ func Test_creating_user_account(t *testing.T) {
 	}
 
 	reqBody, _ := json.Marshal(&intent)
-	fixture := setUpFixtures()
-	assert.NoError(t, fixture.setUpUserAccount())
-	defer fixture.destroy(context.Background())
 
 	req, rec := jsonRequest(http.MethodPost, "/signup/users/", bytes.NewReader(reqBody), "")
 	fixture.app.ServeHTTP(rec, req)
@@ -123,13 +126,10 @@ func assertThatUserAccountWasCreated(t *testing.T, db *users.UsersDB, accountID 
 }
 
 func Test_user_login(t *testing.T) {
-	fixture := setUpFixtures()
-	assert.NoError(t, fixture.setUpUserAccount())
 	loginDto := users.LoginDto{
 		Email:    testUser.Email,
 		Password: testPassword,
 	}
-	defer fixture.destroy(context.Background())
 
 	t.Run("fails for invalid credentials", func(t *testing.T) {
 		result := loginAsUser(users.LoginDto{}, *fixture).Result()

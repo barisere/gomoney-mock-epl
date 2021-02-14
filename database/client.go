@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -12,6 +13,7 @@ import (
 const (
 	MockEPLDatabase  = "mock_epl"
 	AdminsCollection = "admins"
+	UsersCollection  = "users"
 )
 
 func ConnectToDB(mongoURL string) (*mongo.Client, error) {
@@ -32,15 +34,30 @@ func ConnectToDB(mongoURL string) (*mongo.Client, error) {
 
 func createIndexes(db *mongo.Database) error {
 	uniqueAdminEmail := "unique_admin_emails"
+	uniqueUserEmails := "unique_user_emails"
 	unique := true
-	background := true
-	_, err := db.Collection(AdminsCollection).Indexes().CreateOne(context.Background(), mongo.IndexModel{
-		Keys: nil,
+	ctx := context.Background()
+	adminIndexes := db.Collection(AdminsCollection).Indexes()
+	adminIndexes.DropAll(ctx)
+	_, err := adminIndexes.CreateOne(ctx, mongo.IndexModel{
+		Keys: bson.D{{Key: "email", Value: 1}},
 		Options: &options.IndexOptions{
-			Background: &background,
-			Name:       &uniqueAdminEmail,
-			Unique:     &unique,
+			Name:   &uniqueAdminEmail,
+			Unique: &unique,
 		},
 	})
+	if err != nil {
+		return err
+	}
+	userIndexes := db.Collection(UsersCollection).Indexes()
+	userIndexes.DropAll(ctx)
+	_, err = userIndexes.CreateOne(context.Background(), mongo.IndexModel{
+		Keys: bson.D{{Key: "email", Value: 1}},
+		Options: &options.IndexOptions{
+			Name:   &uniqueUserEmails,
+			Unique: &unique,
+		},
+	})
+
 	return err
 }

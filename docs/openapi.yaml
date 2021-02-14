@@ -103,6 +103,8 @@ paths:
           $ref: "#/components/responses/bad_request"
         401:
           $ref: "#/components/responses/unauthorized"
+        409:
+          $ref: "#/components/responses/conflict"
         422:
           $ref: "#/components/responses/unprocessible_entity"
       security:
@@ -133,6 +135,8 @@ paths:
                         $ref: "#/components/schemas/User"
         400:
           $ref: "#/components/responses/bad_request"
+        409:
+          $ref: "#/components/responses/conflict"
         422:
           $ref: "#/components/responses/unprocessible_entity"
       security:
@@ -286,6 +290,17 @@ components:
                       - auth/restricted-action
     bad_request:
       description: Request malformed.
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/Error"
+
+    conflict:
+      description: |
+        Resource conflicts with current state on the server. For example,
+        you tried to create an account with an email that already exists.
       content:
         application/json:
           schema:

@@ -17,6 +17,8 @@ type Administrator struct {
 	PasswordHash string `json:"-" bson:"password_hash"`
 }
 
+var ErrEmailTaken = errors.New("email address taken")
+
 func SignUpAdmin(ctx context.Context, intent SignUpIntent, db AdminsDB) (*Administrator, error) {
 	validationErr, internalErr := intent.Validate()
 	if validationErr != nil {

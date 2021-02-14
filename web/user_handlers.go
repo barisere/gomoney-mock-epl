@@ -21,6 +21,10 @@ func adminSignUpHandler(db users.AdminsDB) echo.HandlerFunc {
 
 		admin, err := users.SignUpAdmin(c.Request().Context(), signupIntent, db)
 		if err != nil {
+			if errors.Is(err, users.ErrEmailTaken) {
+				return echo.NewHTTPError(http.StatusConflict,
+					errorDto("auth/email-taken", err.Error()))
+			}
 			return err
 		}
 
@@ -76,6 +80,10 @@ func userSignUpHandler(db users.UsersDB) echo.HandlerFunc {
 
 		admin, err := users.SignUpUser(c.Request().Context(), signupIntent, db)
 		if err != nil {
+			if errors.Is(err, users.ErrEmailTaken) {
+				return echo.NewHTTPError(http.StatusConflict,
+					errorDto("auth/email-taken", err.Error()))
+			}
 			return err
 		}
 

@@ -5,34 +5,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"gomoney-mock-epl/config"
+	"gomoney-mock-epl/database"
 	"gomoney-mock-epl/users"
 	"gomoney-mock-epl/web"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
-	"time"
-
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
-
-func connectToDB(mongoURL string) *mongo.Client {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURL))
-	if err != nil {
-		panic(err)
-	}
-
-	if err = client.Ping(ctx, readpref.Primary()); err != nil {
-		panic(err)
-	}
-
-	return client
-}
 
 type testFixtures struct {
 	app *web.Application
@@ -77,6 +57,7 @@ func (t testFixtures) setUpUserAccount() error {
 }
 
 func (t testFixtures) destroy(ctx context.Context) {
+	t.app.DBClient.Database(database.MockEPLDatabase).Drop(ctx)
 	t.app.DBClient.Disconnect(ctx)
 }
 
@@ -86,7 +67,10 @@ func setUpFixtures() *testFixtures {
 		HttpBindPort: 8080,
 		MongoURL:     "mongodb://localhost:27017/hf?ssl=false",
 	}
-	dbClient := connectToDB(config.MongoURL)
+	dbClient, err := database.ConnectToDB(config.MongoURL)
+	if err != nil {
+		panic(err)
+	}
 	app, err := web.NewApplication(dbClient, config)
 	if err != nil {
 		panic(err)
@@ -95,6 +79,8 @@ func setUpFixtures() *testFixtures {
 	fixture := testFixtures{
 		app: app,
 	}
+	fixture.setUpAdminAccount()
+	fixture.setUpUserAccount()
 
 	return &fixture
 }
