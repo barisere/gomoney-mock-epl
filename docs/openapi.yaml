@@ -27,23 +27,67 @@ tags:
       url: https://github.com/random-guys/backend-developer-test#user-types
 
   - name: user-accounts
+    description: Everything about user accounts.
+    externalDocs:
+      description: Find out more
+      url: https://github.com/random-guys/backend-developer-test#user-types
+
+  - name: user-accounts
     description: Everything about managing user accounts.
     externalDocs:
       description: Find out more
       url: https://github.com/random-guys/backend-developer-test#user-types
 
 paths:
-  /signup/admins/:
+  /login/admins/:
     post:
+      description: Log in as an admin.
+      operationId: admin_login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginDto"
+      responses:
+        200:
+          $ref: "#/components/responses/login_response"
+        400:
+          $ref: "#/components/responses/bad_request"
+      security:
+        - bearer: []
+      summary: Admin login
       tags:
         - admin-accounts
-      summary: Create a new admin account
+
+  /login/users/:
+    post:
+      description: Log in as a user.
+      operationId: user_login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginDto"
+      responses:
+        200:
+          $ref: "#/components/responses/login_response"
+        400:
+          $ref: "#/components/responses/bad_request"
+      security:
+        - bearer: []
+      summary: User login
+      tags:
+        - user-accounts
+
+  /signup/admins/:
+    post:
+      description: Add another admin to the system. This is restricted to admins.
       operationId: admin_signup
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AdminSignupDto"
+              $ref: "#/components/schemas/SignupDto"
       responses:
         201:
           description: Admin account created.
@@ -56,14 +100,48 @@ paths:
                       data:
                         $ref: "#/components/schemas/Administrator"
         400:
-          description: The request failed validation.
+          $ref: "#/components/responses/bad_request"
+        401:
+          $ref: "#/components/responses/unauthorized"
+        422:
+          $ref: "#/components/responses/unprocessible_entity"
+      security:
+        - bearer: []
+      summary: Create a new admin account
+      tags:
+        - admin-accounts
+
+  /signup/users/:
+    post:
+      description: Sign up as a user
+      operationId: user_signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignupDto"
+      responses:
+        201:
+          description: User account created.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ValidationError"
+                allOf:
+                  - $ref: "#/components/schemas/_DataResponse"
+                  - properties:
+                      data:
+                        $ref: "#/components/schemas/User"
+        400:
+          $ref: "#/components/responses/bad_request"
+        422:
+          $ref: "#/components/responses/unprocessible_entity"
+      security:
+        - bearer: []
+      summary: Create a new user account
+      tags:
+        - user-accounts
 
 components:
-
   requestBodies: {}
 
   schemas:
@@ -86,8 +164,8 @@ components:
         - last_name
         - email
 
-    AdminSignupDto:
-      description: Information required for admin sign up.
+    SignupDto:
+      description: Information required for sign up.
       allOf:
         - $ref: "#/components/schemas/BasicUserInfo"
         - properties:
@@ -96,8 +174,25 @@ components:
           required:
             - password
 
+    LoginDto:
+      description: Login credentials.
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - password
+
     Administrator:
       description: A user with privileged access.
+      allOf:
+        - $ref: "#/components/schemas/_Entity"
+        - $ref: "#/components/schemas/BasicUserInfo"
+
+    User:
+      description: A user with regular access.
       allOf:
         - $ref: "#/components/schemas/_Entity"
         - $ref: "#/components/schemas/BasicUserInfo"
@@ -162,6 +257,63 @@ components:
                 required:
                   - message
                   - target
+
+  responses:
+    login_response:
+      description: Login successful.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/_DataResponse"
+              - properties:
+                  data:
+                    properties:
+                      token:
+                        type: string
+
+    forbidden:
+      description: Insufficient privileges to carry out action.
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/Error"
+              - properties:
+                  code:
+                    enum:
+                      - auth/restricted-action
+    bad_request:
+      description: Request malformed.
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/Error"
+
+    unauthorized:
+      description: Authentication information provided is incorrect.
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/Error"
+              - properties:
+                  code:
+                    enum:
+                      - auth/unauthorized
+
+    unprocessible_entity:
+      description: The request failed vaildation.
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/ValidationError"
 
   securitySchemes:
     api_key:
