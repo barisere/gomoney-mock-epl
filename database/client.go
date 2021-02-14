@@ -11,10 +11,11 @@ import (
 )
 
 const (
-	MockEPLDatabase  = "mock_epl"
-	AdminsCollection = "admins"
-	UsersCollection  = "users"
-	TeamsCollection  = "teams"
+	MockEPLDatabase    = "mock_epl"
+	AdminsCollection   = "admins"
+	UsersCollection    = "users"
+	TeamsCollection    = "teams"
+	FixturesCollection = "fixtures"
 )
 
 func ConnectToDB(mongoURL string) (*mongo.Client, error) {

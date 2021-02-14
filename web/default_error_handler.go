@@ -14,6 +14,7 @@ func DefaultErrorHandler(err error, c echo.Context) {
 	c.Logger().Error(err)
 	switch err.(type) {
 	case *errors.ValidationError:
+	case errors.ValidationError:
 		_ = c.JSON(http.StatusUnprocessableEntity, err)
 	case *echo.HTTPError:
 		_err := err.(*echo.HTTPError)

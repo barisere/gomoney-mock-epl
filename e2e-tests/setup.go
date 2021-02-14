@@ -21,11 +21,11 @@ const (
 	testUserEmail  = "jane.doe@gomoney.local"
 )
 
-type testFixtures struct {
+type testApplication struct {
 	app *web.Application
 }
 
-func (t testFixtures) setUpAdminAccount() error {
+func (t testApplication) setUpAdminAccount() error {
 	intent := users.SignUpIntent{
 		Email:     testAdminEmail,
 		FirstName: "Jon",
@@ -36,7 +36,7 @@ func (t testFixtures) setUpAdminAccount() error {
 	return err
 }
 
-func (t testFixtures) setUpUserAccount() error {
+func (t testApplication) setUpUserAccount() error {
 	intent := users.SignUpIntent{
 		Email:     testUserEmail,
 		FirstName: "Jane",
@@ -47,12 +47,12 @@ func (t testFixtures) setUpUserAccount() error {
 	return err
 }
 
-func (t testFixtures) destroy(ctx context.Context) {
+func (t testApplication) destroy(ctx context.Context) {
 	t.app.DBClient.Database(database.MockEPLDatabase).Drop(ctx)
 	t.app.DBClient.Disconnect(ctx)
 }
 
-func setUpFixtures() *testFixtures {
+func newTestApp() *testApplication {
 	config := config.Config{
 		Environment:  config.Testing,
 		HttpBindPort: 8080,
@@ -67,7 +67,7 @@ func setUpFixtures() *testFixtures {
 		panic(err)
 	}
 
-	fixture := testFixtures{
+	fixture := testApplication{
 		app: app,
 	}
 	fixture.setUpAdminAccount()

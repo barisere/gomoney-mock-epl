@@ -2,18 +2,10 @@ package errors
 
 import (
 	"fmt"
-	v "github.com/go-ozzo/ozzo-validation"
 	"strings"
+
+	v "github.com/go-ozzo/ozzo-validation"
 )
-
-type ApplicationError struct {
-	Code string `json:"code"`
-	Message string `json:"message"`
-}
-
-func (a ApplicationError) Error() string {
-	return fmt.Sprintf("%s: %s", a.Code, a.Message)
-}
 
 type ValidationErrorDetails struct {
 	Field   string `json:"field"`
@@ -21,8 +13,8 @@ type ValidationErrorDetails struct {
 }
 
 type ValidationError struct {
-	Code string `json:"code"`
-	Message string `json:"message"`
+	Code    string                   `json:"code"`
+	Message string                   `json:"message"`
 	Details []ValidationErrorDetails `json:"details;omitempty"`
 }
 
@@ -50,8 +42,8 @@ func toErrorDetails(errors v.Errors) []ValidationErrorDetails {
 func ToValidationError(errors error, message, code string) (*ValidationError, error) {
 	if e, ok := errors.(v.Errors); ok {
 		return &ValidationError{
-				Code:    code,
-				Message: message,
+			Code:    code,
+			Message: message,
 			Details: toErrorDetails(e),
 		}, nil
 	}
