@@ -3,17 +3,19 @@ package users
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID           string `json:"id" bson:"_id"`
-	Email        string `json:"email" bson:"email"`
-	FirstName    string `json:"first_name" bson:"first_name"`
-	LastName     string `json:"last_name" bson:"last_name"`
-	PasswordHash string `json:"-" bson:"password_hash"`
+	ID           string    `json:"id" bson:"_id"`
+	Email        string    `json:"email" bson:"email"`
+	FirstName    string    `json:"first_name" bson:"first_name"`
+	LastName     string    `json:"last_name" bson:"last_name"`
+	PasswordHash string    `json:"-" bson:"password_hash"`
+	CreatedAt    time.Time `json:"created_at" bson:"created_at"`
 }
 
 func SignUpUser(ctx context.Context, intent SignUpIntent, db UsersDB) (*User, error) {
@@ -29,6 +31,7 @@ func SignUpUser(ctx context.Context, intent SignUpIntent, db UsersDB) (*User, er
 		return nil, err
 	}
 	user := User{
+		CreatedAt:    time.Now(),
 		Email:        intent.Email,
 		FirstName:    intent.FirstName,
 		LastName:     intent.LastName,
