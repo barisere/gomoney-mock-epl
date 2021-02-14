@@ -1,9 +1,7 @@
 package tests
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 	"gomoney-mock-epl/users"
 	"gomoney-mock-epl/web"
 	"net/http"
@@ -98,9 +96,7 @@ func Test_creating_user_account(t *testing.T) {
 		Password:  "really strong, 123456",
 	}
 
-	reqBody, _ := json.Marshal(&intent)
-
-	req, rec := jsonRequest(http.MethodPost, "/signup/users/", bytes.NewReader(reqBody), "")
+	req, rec := jsonRequest(http.MethodPost, "/signup/users/", intent, "")
 	fixture.app.ServeHTTP(rec, req)
 	response := web.DataDto{}
 	result := rec.Result()
@@ -110,8 +106,7 @@ func Test_creating_user_account(t *testing.T) {
 }
 
 func loginAsUser(dto users.LoginDto, fixture testFixtures) *httptest.ResponseRecorder {
-	reqBody, _ := json.Marshal(&dto)
-	req, rec := jsonRequest(http.MethodPost, "/login/users/", bytes.NewReader(reqBody), "")
+	req, rec := jsonRequest(http.MethodPost, "/login/users/", dto, "")
 	fixture.app.ServeHTTP(rec, req)
 	return rec
 }
@@ -137,6 +132,7 @@ func Test_user_login(t *testing.T) {
 		result := loginAsUser(loginDto, *fixture).Result()
 		response := web.DataDto{}
 		assert.NoError(t, readJsonResponse(result.Body, &response))
+		assert.Equal(t, http.StatusOK, result.StatusCode)
 		token := response.Data.(map[string]interface{})["token"].(string)
 		assert.NotEmpty(t, token)
 	})
