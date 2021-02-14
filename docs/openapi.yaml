@@ -206,6 +206,12 @@ paths:
         - teams
 
   /teams/{team_id}:
+    parameters:
+      - name: team_id
+        in: path
+        schema:
+          type: string
+        required: true
     get:
       operationId: view_team
       responses:
