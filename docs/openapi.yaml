@@ -38,6 +38,12 @@ tags:
       description: Find out more
       url: https://github.com/random-guys/backend-developer-test#user-types
 
+  - name: teams
+    description: Everything about managing teams.
+    externalDocs:
+      description: Find out more
+      url: https://github.com/random-guys/backend-developer-test#user-types
+
 paths:
   /login/admins/:
     post:
@@ -145,6 +151,125 @@ paths:
       tags:
         - user-accounts
 
+  /teams/:
+    post:
+      operationId: create_team
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeamInfo"
+      responses:
+        201:
+          description: Team added.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/_DataResponse"
+                  - properties:
+                      data:
+                        $ref: "#/components/schemas/Team"
+        400:
+          $ref: "#/components/responses/bad_request"
+        401:
+          $ref: "#/components/responses/unauthorized"
+        422:
+          $ref: "#/components/responses/unprocessible_entity"
+      security:
+        - bearer: []
+      summary: Add a new team (restricted to admins)
+      tags:
+        - teams
+
+    get:
+      operationId: list_teams
+      responses:
+        200:
+          description: Teams list.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/_DataResponse"
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Team"
+        401:
+          $ref: "#/components/responses/unauthorized"
+      security:
+        - bearer: []
+      summary: List available teams (restricted to admins)
+      tags:
+        - teams
+
+  /teams/{team_id}:
+    get:
+      operationId: view_team
+      responses:
+        200:
+          description: Team info.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/_DataResponse"
+                  - properties:
+                      data:
+                        $ref: "#/components/schemas/Team"
+        401:
+          $ref: "#/components/responses/unauthorized"
+      security:
+        - bearer: []
+      summary: View team info (restricted to admins)
+      tags:
+        - teams
+    delete:
+      operationId: remove_team
+      responses:
+        200:
+          description: Team removed.
+        401:
+          $ref: "#/components/responses/unauthorized"
+      security:
+        - bearer: []
+      summary: Remove team (restricted to admins)
+      tags:
+        - teams
+
+    patch:
+      description: Update team info (restricted to admins)
+      operationId: update_team
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeamInfo"
+      responses:
+        200:
+          description: Team updated.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/_DataResponse"
+                  - properties:
+                      data:
+                        $ref: "#/components/schemas/Team"
+        400:
+          $ref: "#/components/responses/bad_request"
+        401:
+          $ref: "#/components/responses/unauthorized"
+        422:
+          $ref: "#/components/responses/unprocessible_entity"
+      security:
+        - bearer: []
+      summary: Update team info
+      tags:
+        - teams
+
 components:
   requestBodies: {}
 
@@ -200,6 +325,28 @@ components:
       allOf:
         - $ref: "#/components/schemas/_Entity"
         - $ref: "#/components/schemas/BasicUserInfo"
+
+    TeamInfo:
+      properties:
+        home_stadium:
+          type: string
+        logo_url:
+          type: string
+        name:
+          type: string
+        short_name:
+          type: string
+      required:
+        - home_stadium
+        - logo_url
+        - name
+        - short_name
+
+    Team:
+      description: A competitor in the EPL league.
+      allOf:
+        - $ref: "#/components/schemas/_Entity"
+        - $ref: "#/components/schemas/TeamInfo"
 
     _DataResponse:
       description: An API response containing data.

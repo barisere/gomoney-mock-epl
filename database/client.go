@@ -59,6 +59,21 @@ func createIndexes(db *mongo.Database) error {
 			Unique: &unique,
 		},
 	})
+	teamIndexes := db.Collection(TeamsCollection).Indexes()
+	teamIndexes.DropAll(ctx)
+	_, err = teamIndexes.CreateMany(ctx, []mongo.IndexModel{
+		{
+			Keys:    bson.D{{Key: "name", Value: 1}},
+			Options: &options.IndexOptions{Unique: &unique},
+		},
+		{
+			Keys:    bson.D{{Key: "short_name", Value: 1}},
+			Options: &options.IndexOptions{Unique: &unique},
+		},
+	})
+	if err != nil {
+		return err
+	}
 
-	return err
+	return nil
 }

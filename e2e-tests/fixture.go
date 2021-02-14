@@ -15,10 +15,6 @@ import (
 	"net/http/httptest"
 )
 
-type testFixtures struct {
-	app *web.Application
-}
-
 const (
 	testAdminEmail = "jon.doe@gomoney.local"
 	testPassword   = "password"
@@ -31,6 +27,10 @@ var (
 		LastName:  "Doe",
 	}
 )
+
+type testFixtures struct {
+	app *web.Application
+}
 
 func (t testFixtures) setUpAdminAccount() error {
 	intent := users.SignUpIntent{

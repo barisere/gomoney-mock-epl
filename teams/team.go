@@ -2,6 +2,7 @@ package teams
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -39,7 +40,7 @@ func (t TeamsDB) Create(ctx context.Context, team Team) (*Team, error) {
 func (t TeamsDB) Update(ctx context.Context, team Team) (*Team, error) {
 	team.UpdatedAt = time.Now()
 	filter := bson.D{bson.E{Key: "_id", Value: team.ID}}
-	_, err := t.UpdateOne(ctx, filter, &team, options.Update().SetBypassDocumentValidation(false))
+	_, err := t.ReplaceOne(ctx, filter, &team)
 	return &team, err
 }
 
@@ -55,6 +56,23 @@ func (t TeamsDB) List(ctx context.Context) ([]Team, error) {
 		return nil, err
 	}
 	return teams, nil
+}
+
+// ByID fetches a team by ID. It returns (nil, nil) if no team matched.
+func (t TeamsDB) ByID(ctx context.Context, id string) (*Team, error) {
+	result := t.FindOne(ctx, bson.D{{Key: "_id", Value: id}})
+	err := result.Err()
+	if err != nil {
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	team := Team{}
+	if err := result.Decode(&team); err != nil {
+		return nil, err
+	}
+	return &team, nil
 }
 
 // Delete removes a team from the database.
