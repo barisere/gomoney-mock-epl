@@ -128,3 +128,36 @@ func Test_admins_can_edit_teams(t *testing.T) {
 	newStadium := responseBody.Data.(map[string]interface{})["home_stadium"].(string)
 	assert.Equal(t, liverpoolCopy.HomeStadium, newStadium)
 }
+
+func Test_users_can_view_teams(t *testing.T) {
+	clearTeamsDB()
+	createTeam(manCity)
+	createTeam(liverpool)
+	req, rec := jsonRequest(http.MethodGet, "/teams/", nil, userToken)
+	fixture.app.ServeHTTP(rec, req)
+	result := rec.Result()
+	assert.Equal(t, http.StatusOK, result.StatusCode)
+	responseBody := web.DataDto{}
+	assert.NoError(t, readJsonResponse(result.Body, &responseBody))
+	assert.Equal(t, "Teams", responseBody.Type)
+}
+
+func Test_users_can_view_single_team(t *testing.T) {
+	clearTeamsDB()
+	createTeam(liverpool)
+	req, rec := jsonRequest(http.MethodGet, "/teams/", nil, userToken)
+	fixture.app.ServeHTTP(rec, req)
+	result := rec.Result()
+	responseBody := web.DataDto{}
+	assert.NoError(t, readJsonResponse(result.Body, &responseBody))
+	firstID := responseBody.Data.([]interface{})[0].(map[string]interface{})["id"].(string)
+
+	req, rec = jsonRequest(http.MethodGet, "/teams/"+firstID, nil, adminToken)
+	fixture.app.ServeHTTP(rec, req)
+	result = rec.Result()
+	assert.Equal(t, http.StatusOK, result.StatusCode)
+	responseBody = web.DataDto{}
+	assert.NoError(t, readJsonResponse(result.Body, &responseBody))
+	teamName := responseBody.Data.(map[string]interface{})["name"].(string)
+	assert.Equal(t, liverpool.Name, teamName)
+}

@@ -18,14 +18,7 @@ import (
 const (
 	testAdminEmail = "jon.doe@gomoney.local"
 	testPassword   = "password"
-)
-
-var (
-	testUser = &users.User{
-		Email:     "jane.doe@gomoney.local",
-		FirstName: "Jane",
-		LastName:  "Doe",
-	}
+	testUserEmail  = "jane.doe@gomoney.local"
 )
 
 type testFixtures struct {
@@ -45,13 +38,12 @@ func (t testFixtures) setUpAdminAccount() error {
 
 func (t testFixtures) setUpUserAccount() error {
 	intent := users.SignUpIntent{
-		Email:     testUser.Email,
-		FirstName: testUser.FirstName,
-		LastName:  testUser.LastName,
+		Email:     testUserEmail,
+		FirstName: "Jane",
+		LastName:  "Doe",
 		Password:  testPassword,
 	}
-	var err error
-	testUser, err = users.SignUpUser(context.Background(), intent, t.app.UsersDB)
+	_, err := users.SignUpUser(context.Background(), intent, t.app.UsersDB)
 	return err
 }
 

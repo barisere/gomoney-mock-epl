@@ -131,9 +131,9 @@ func TeamRoutes(db teams.TeamsDB) RouteProvider {
 	return func(e *echo.Echo) {
 		teams := e.Group("/teams", jwtMiddleware)
 		teams.POST("/", createTeam(db), onlyAdmins)
-		teams.GET("/", listTeams(db), onlyAdmins)
+		teams.GET("/", listTeams(db))
 		teams.DELETE("/:team_id", deleteTeam(db), onlyAdmins)
-		teams.GET("/:team_id", viewTeam(db), onlyAdmins)
+		teams.GET("/:team_id", viewTeam(db))
 		teams.PATCH("/:team_id", editTeam(db), onlyAdmins)
 	}
 }

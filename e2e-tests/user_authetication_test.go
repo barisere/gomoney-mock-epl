@@ -14,6 +14,7 @@ import (
 
 var fixture *testFixtures
 var adminToken string
+var userToken string
 
 func TestMain(m *testing.M) {
 	fixture = setUpFixtures()
@@ -24,6 +25,14 @@ func TestMain(m *testing.M) {
 	loginResponse := web.DataDto{}
 	readJsonResponse(loginResult.Body, &loginResponse)
 	adminToken = loginResponse.Data.(map[string]interface{})["token"].(string)
+
+	loginResult = loginAsUser(users.LoginDto{
+		Email:    testUserEmail,
+		Password: testPassword,
+	}, *fixture).Result()
+	loginResponse = web.DataDto{}
+	readJsonResponse(loginResult.Body, &loginResponse)
+	userToken = loginResponse.Data.(map[string]interface{})["token"].(string)
 
 	exitCode := m.Run()
 	fixture.destroy(context.Background())
@@ -119,7 +128,7 @@ func assertThatUserAccountWasCreated(t *testing.T, db users.UsersDB, accountID s
 
 func Test_user_login(t *testing.T) {
 	loginDto := users.LoginDto{
-		Email:    testUser.Email,
+		Email:    testUserEmail,
 		Password: testPassword,
 	}
 
