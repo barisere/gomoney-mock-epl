@@ -15,10 +15,10 @@ type UsersDB struct {
 	*mongo.Collection
 }
 
-func (db UsersDB) Create(ctx context.Context, user User) error {
+func (db UsersDB) Create(ctx context.Context, user User) (*User, error) {
 	user.ID = primitive.NewObjectID().Hex()
 	_, err := db.InsertOne(ctx, &user, options.InsertOne().SetBypassDocumentValidation(false))
-	return err
+	return &user, err
 }
 
 func (db UsersDB) ByEmail(ctx context.Context, email string) (*User, error) {

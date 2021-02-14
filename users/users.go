@@ -30,18 +30,18 @@ func SignUpUser(ctx context.Context, intent SignUpIntent, db UsersDB) (*User, er
 	if err := (&intentCopy).HashPassword(); err != nil {
 		return nil, err
 	}
-	user := User{
+	user := &User{
 		CreatedAt:    time.Now(),
 		Email:        intent.Email,
 		FirstName:    intent.FirstName,
 		LastName:     intent.LastName,
 		PasswordHash: intentCopy.PasswordHash,
 	}
-	err := db.Create(ctx, user)
+	user, err := db.Create(ctx, *user)
 	if err != nil {
 		return nil, err
 	}
-	return &user, nil
+	return user, nil
 }
 
 func LoginAsUser(ctx context.Context, db UsersDB, dto LoginDto) (*jwt.Token, error) {

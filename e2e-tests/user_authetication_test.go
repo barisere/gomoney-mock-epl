@@ -29,7 +29,7 @@ func Test_creating_admin_account(t *testing.T) {
 
 	reqBody, _ := json.Marshal(&intent)
 	fixture := setUpFixtures()
-	fixture.setUpAdminAccount()
+	assert.NoError(t, fixture.setUpAdminAccount())
 	defer fixture.destroy(context.Background())
 
 	t.Run("fails given invalid admin authentication", func(t *testing.T) {
@@ -97,7 +97,7 @@ func Test_creating_user_account(t *testing.T) {
 
 	reqBody, _ := json.Marshal(&intent)
 	fixture := setUpFixtures()
-	fixture.setUpUserAccount()
+	assert.NoError(t, fixture.setUpUserAccount())
 	defer fixture.destroy(context.Background())
 
 	req, rec := jsonRequest(http.MethodPost, "/signup/users/", bytes.NewReader(reqBody), "")
@@ -106,7 +106,7 @@ func Test_creating_user_account(t *testing.T) {
 	result := rec.Result()
 	assert.Equal(t, http.StatusCreated, result.StatusCode)
 	assert.NoError(t, readJsonResponse(result.Body, &response))
-	assertThatAdminAccountWasCreated(t, fixture.app.AdminDB, response.Data.(map[string]interface{})["id"].(string))
+	assertThatUserAccountWasCreated(t, fixture.app.UsersDB, response.Data.(map[string]interface{})["id"].(string))
 }
 
 func loginAsUser(dto users.LoginDto, fixture testFixtures) *httptest.ResponseRecorder {
@@ -126,7 +126,7 @@ func Test_user_login(t *testing.T) {
 	fixture := setUpFixtures()
 	assert.NoError(t, fixture.setUpUserAccount())
 	loginDto := users.LoginDto{
-		Email:    testAdmin.Email,
+		Email:    testUser.Email,
 		Password: testPassword,
 	}
 	defer fixture.destroy(context.Background())

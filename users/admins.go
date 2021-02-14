@@ -29,17 +29,17 @@ func SignUpAdmin(ctx context.Context, intent SignUpIntent, db AdminsDB) (*Admini
 	if err := (&intentCopy).HashPassword(); err != nil {
 		return nil, err
 	}
-	admin := Administrator{
+	admin := &Administrator{
 		Email:        intent.Email,
 		FirstName:    intent.FirstName,
 		LastName:     intent.LastName,
 		PasswordHash: intentCopy.PasswordHash,
 	}
-	err := db.Create(ctx, admin)
+	admin, err := db.Create(ctx, *admin)
 	if err != nil {
 		return nil, err
 	}
-	return &admin, nil
+	return admin, nil
 }
 
 type LoginDto struct {

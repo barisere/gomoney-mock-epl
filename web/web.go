@@ -24,9 +24,9 @@ type Application struct {
 
 func NewApplication(db *mongo.Client, cfg config.Config) (*Application, error) {
 	defaultDB := db.Database(database.MockEPLDatabase)
-	adminsCollection := defaultDB.Collection("admin_accounts")
+	adminsCollection := defaultDB.Collection(database.AdminsCollection)
 	adminsDB := users.AdminsDB{Collection: adminsCollection}
-	usersCollection := defaultDB.Collection("admin_accounts")
+	usersCollection := defaultDB.Collection(database.UsersCollection)
 	usersDB := users.UsersDB{Collection: usersCollection}
 
 	e := echo.New()

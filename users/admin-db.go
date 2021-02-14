@@ -15,10 +15,10 @@ type AdminsDB struct {
 	*mongo.Collection
 }
 
-func (db AdminsDB) Create(ctx context.Context, admin Administrator) error {
+func (db AdminsDB) Create(ctx context.Context, admin Administrator) (*Administrator, error) {
 	admin.ID = primitive.NewObjectID().Hex()
 	_, err := db.InsertOne(ctx, &admin, options.InsertOne().SetBypassDocumentValidation(false))
-	return err
+	return &admin, err
 }
 
 func (db AdminsDB) ByEmail(ctx context.Context, email string) (*Administrator, error) {
