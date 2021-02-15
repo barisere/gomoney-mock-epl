@@ -26,7 +26,8 @@ func createFixture(db fixtures.FixturesDB) echo.HandlerFunc {
 
 func listFixtures(db fixtures.FixturesDB) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		fixtures, err := db.List(c.Request().Context())
+		fixtures, err := db.List(c.Request().Context(),
+			fixtures.NewFixtureStatus(c.QueryParam("status")))
 		if err != nil {
 			return err
 		}

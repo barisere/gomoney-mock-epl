@@ -138,8 +138,45 @@ func listFixturesQuery() mongo.Pipeline {
 	return append(inIDMatch, restFindStages()...)
 }
 
-func (db FixturesDB) List(ctx context.Context) ([]Fixture, error) {
-	cursor, err := db.Collection.Aggregate(ctx, listFixturesQuery())
+func listFixturesByStatusQuery(status fixtureStatus) mongo.Pipeline {
+	comparison := "$gt"
+	if status == Completed {
+		comparison = "$lt"
+	}
+	now := time.Now().UTC()
+	match := mongo.Pipeline{
+		bson.D{
+			{Key: "$match", Value: bson.D{
+				{Key: "match_date", Value: bson.D{{Key: comparison, Value: now}}},
+			}},
+		},
+	}
+	return append(match, restFindStages()...)
+}
+
+type fixtureStatus string
+
+const (
+	Completed = fixtureStatus("completed")
+	Pending   = fixtureStatus("pending")
+)
+
+func NewFixtureStatus(s string) fixtureStatus {
+	if s == "completed" {
+		return Completed
+	}
+	if s == "pending" {
+		return Pending
+	}
+	return ""
+}
+
+func (db FixturesDB) List(ctx context.Context, status fixtureStatus) ([]Fixture, error) {
+	query := listFixturesQuery()
+	if status != "" {
+		query = listFixturesByStatusQuery(status)
+	}
+	cursor, err := db.Collection.Aggregate(ctx, query)
 	if err != nil {
 		return nil, err
 	}

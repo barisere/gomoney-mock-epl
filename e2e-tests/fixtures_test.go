@@ -136,6 +136,37 @@ func Test_actions_on_fixtures(t *testing.T) {
 		viewedID := responseBody.Data.(map[string]interface{})["id"].(string)
 		assert.Equal(t, id, viewedID)
 	})
+
+	t.Run("users can view completed or pending fixtures", func(t *testing.T) {
+		clearFixtures()
+		pendingFixture := createFixtureDto
+		completedFixture := createFixtureDto
+		completedFixture.MatchDate = time.Now().Add(-72 * time.Hour)
+		createFixture(pendingFixture)
+		createFixture(completedFixture)
+
+		req, rec := jsonRequest(http.MethodGet, "/fixtures/?status=pending", nil, userToken)
+		testApp.app.ServeHTTP(rec, req)
+		result := rec.Result()
+		assert.Equal(t, http.StatusOK, result.StatusCode)
+		responseBody := web.DataDto{}
+		readJsonResponse(result.Body, &responseBody)
+		data := responseBody.Data.([]interface{})
+		assert.Len(t, data, 1)
+		homeTeamID := data[0].(map[string]interface{})["home_team"].(map[string]interface{})["id"].(string)
+		assert.Equal(t, pendingFixture.HomeTeam, homeTeamID)
+
+		req, rec = jsonRequest(http.MethodGet, "/fixtures/?status=completed", nil, userToken)
+		testApp.app.ServeHTTP(rec, req)
+		result = rec.Result()
+		assert.Equal(t, http.StatusOK, result.StatusCode)
+		responseBody = web.DataDto{}
+		readJsonResponse(result.Body, &responseBody)
+		data = responseBody.Data.([]interface{})
+		assert.Len(t, data, 1)
+		homeTeamID = data[0].(map[string]interface{})["home_team"].(map[string]interface{})["id"].(string)
+		assert.Equal(t, completedFixture.HomeTeam, homeTeamID)
+	})
 }
 
 func createFixture(dto fixtures.CreateFixtureRequest) *http.Response {
