@@ -120,8 +120,9 @@ func userLoginHandler(db users.UsersDB) echo.HandlerFunc {
 }
 
 func UserAuthRoute(db users.UsersDB) RouteProvider {
+	rateLimiter := middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(5))
 	return func(e *echo.Echo) {
-		e.POST("/signup/users/", userSignUpHandler(db))
-		e.POST("/login/users/", userLoginHandler(db))
+		e.POST("/signup/users/", userSignUpHandler(db), rateLimiter)
+		e.POST("/login/users/", userLoginHandler(db), rateLimiter)
 	}
 }
