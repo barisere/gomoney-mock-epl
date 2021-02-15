@@ -53,16 +53,15 @@ func (t testApplication) destroy(ctx context.Context) {
 }
 
 func newTestApp() *testApplication {
-	config := config.Config{
-		Environment:  config.Testing,
-		HttpBindPort: 8080,
-		MongoURL:     "mongodb://localhost:27017/hf?ssl=false",
+	config, err := config.LoadConfig()
+	if err != nil {
+		panic(err)
 	}
 	dbClient, err := database.ConnectToDB(config.MongoURL)
 	if err != nil {
 		panic(err)
 	}
-	app, err := web.NewApplication(dbClient, config)
+	app, err := web.NewApplication(dbClient, *config)
 	if err != nil {
 		panic(err)
 	}
