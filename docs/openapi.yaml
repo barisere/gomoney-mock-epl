@@ -331,6 +331,45 @@ paths:
       tags:
         - fixtures
 
+  /search/:
+    get:
+      description: Search for teams and fixtures that match a query.
+      operationId: search
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/_DataResponse"
+                  - properties:
+                      "@type":
+                        enum:
+                          - SearchResults
+                      data:
+                        properties:
+                          teams:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/Team"
+                          fixtures:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/Fixture"
+                        required:
+                          - teams
+                          - fixtures
+          description: Faceted search results
+      summary: Search for teams and fixtures
+      tags:
+        - teams
+        - fixtures
+
 components:
   requestBodies:
     fixture_info:

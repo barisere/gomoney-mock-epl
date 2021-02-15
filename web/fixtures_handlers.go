@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func createFixture(db fixtures.FixturesDB) echo.HandlerFunc {
+func createFixture(db fixtures.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		dto := fixtures.CreateFixtureRequest{}
 		if err := c.Bind(&dto); err != nil {
@@ -24,7 +24,7 @@ func createFixture(db fixtures.FixturesDB) echo.HandlerFunc {
 	}
 }
 
-func listFixtures(db fixtures.FixturesDB) echo.HandlerFunc {
+func listFixtures(db fixtures.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		fixtures, err := db.List(c.Request().Context(),
 			fixtures.NewFixtureStatus(c.QueryParam("status")))
@@ -36,7 +36,7 @@ func listFixtures(db fixtures.FixturesDB) echo.HandlerFunc {
 	}
 }
 
-func deleteFixture(db fixtures.FixturesDB) echo.HandlerFunc {
+func deleteFixture(db fixtures.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		fixtureID := c.Param("fixture_id")
 		if err := db.Delete(c.Request().Context(), fixtureID); err != nil {
@@ -48,7 +48,7 @@ func deleteFixture(db fixtures.FixturesDB) echo.HandlerFunc {
 
 var fixtureNotFound = errorDto("NotFound", "That fixture does not exist")
 
-func editFixture(db fixtures.FixturesDB) echo.HandlerFunc {
+func editFixture(db fixtures.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		fixtureID, err := primitive.ObjectIDFromHex(c.Param("fixture_id"))
 		if err != nil {
@@ -70,7 +70,7 @@ func editFixture(db fixtures.FixturesDB) echo.HandlerFunc {
 	}
 }
 
-func viewFixture(db fixtures.FixturesDB) echo.HandlerFunc {
+func viewFixture(db fixtures.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		fixtureID, err := primitive.ObjectIDFromHex(c.Param("fixture_id"))
 		if err != nil {
@@ -90,7 +90,7 @@ func viewFixture(db fixtures.FixturesDB) echo.HandlerFunc {
 	}
 }
 
-func FixturesRoutes(db fixtures.FixturesDB) RouteProvider {
+func FixturesRoutes(db fixtures.DB) RouteProvider {
 	return func(e *echo.Echo) {
 		fixturesRoutes := e.Group("/fixtures", jwtMiddleware)
 		fixturesRoutes.POST("/", createFixture(db), onlyAdmins)

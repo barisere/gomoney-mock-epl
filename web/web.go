@@ -21,7 +21,7 @@ type Application struct {
 	DBClient   *mongo.Client
 	DefaultDB  *mongo.Database
 	AdminDB    users.AdminsDB
-	FixturesDB fixtures.FixturesDB
+	FixturesDB fixtures.DB
 	UsersDB    users.UsersDB
 	TeamsDB    teams.TeamsDB
 	*echo.Echo
@@ -36,7 +36,7 @@ func NewApplication(db *mongo.Client, cfg config.Config) (*Application, error) {
 	teamsCollection := defaultDB.Collection(database.TeamsCollection)
 	teamsDB := teams.TeamsDB{Collection: teamsCollection}
 	fixturesCollection := defaultDB.Collection(database.FixturesCollection)
-	fixturesDB := fixtures.FixturesDB{Collection: fixturesCollection, TeamsDB: teamsDB}
+	fixturesDB := fixtures.DB{Collection: fixturesCollection, TeamsDB: teamsDB}
 
 	e := echo.New()
 	e.Use(middleware.Logger(),
@@ -61,6 +61,7 @@ func NewApplication(db *mongo.Client, cfg config.Config) (*Application, error) {
 	UserAuthRoute(app.UsersDB)(app.Echo)
 	TeamRoutes(app.TeamsDB)(app.Echo)
 	FixturesRoutes(app.FixturesDB)(app.Echo)
+	searchRoutesProvider(app.TeamsDB, app.FixturesDB)(app.Echo)
 
 	return app, nil
 }
