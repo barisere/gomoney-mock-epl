@@ -10,6 +10,7 @@ import (
 	"gomoney-mock-epl/users"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -38,6 +39,7 @@ func NewApplication(db *mongo.Client, cfg config.Config) (*Application, error) {
 	fixturesDB := fixtures.FixturesDB{Collection: fixturesCollection, TeamsDB: teamsDB}
 
 	e := echo.New()
+	e.Use(middleware.CORS(), middleware.BodyLimit("8K"))
 	e.HTTPErrorHandler = DefaultErrorHandler
 	e.Server.Addr = fmt.Sprintf(":%d", cfg.HttpBindPort)
 
