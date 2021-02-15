@@ -204,7 +204,36 @@ func (db FixturesDB) Delete(ctx context.Context, id string) error {
 	return err
 }
 
-func (db FixturesDB) Update(ctx context.Context, id primitive.ObjectID, update CreateFixtureRequest) (*Fixture, error) {
+func (db FixturesDB) Update(ctx context.Context, id primitive.ObjectID, dto CreateFixtureRequest) (*Fixture, error) {
+	validationErrs := customErrors.ValidationError{
+		Code:    "fixtures/cannot-create-fixture",
+		Message: "Your request to create a fixture failed",
+		Details: []customErrors.ValidationErrorDetails{},
+	}
+	if dto.HomeTeam == dto.AwayTeam {
+		validationErrs.Message = "home team and away team must be different"
+		return nil, validationErrs
+	}
+	homeTeam, err := db.TeamsDB.ByID(ctx, dto.HomeTeam)
+	if err != nil {
+		return nil, err
+	}
+	if homeTeam == nil {
+		validationErrs.Details = append(validationErrs.Details, customErrors.ValidationErrorDetails{
+			Field:   "home_team",
+			Message: "Unknown home team",
+		})
+	}
+	awayTeam, err := db.TeamsDB.ByID(ctx, dto.AwayTeam)
+	if awayTeam == nil {
+		validationErrs.Details = append(validationErrs.Details, customErrors.ValidationErrorDetails{
+			Field:   "away_team",
+			Message: "Unknown away team",
+		})
+	}
+	if len(validationErrs.Details) > 0 {
+		return nil, validationErrs
+	}
 	fixture, err := db.ByID(ctx, id)
 	if err != nil {
 		return nil, err
@@ -220,14 +249,14 @@ func (db FixturesDB) Update(ctx context.Context, id primitive.ObjectID, update C
 		CreatedAt: fixture.CreatedAt,
 		UpdatedAt: fixture.UpdatedAt,
 	}
-	if update.AwayTeam != "" {
-		writeModel.AwayTeam = update.AwayTeam
+	if dto.AwayTeam != "" {
+		writeModel.AwayTeam = dto.AwayTeam
 	}
-	if update.HomeTeam != "" {
-		writeModel.HomeTeam = update.HomeTeam
+	if dto.HomeTeam != "" {
+		writeModel.HomeTeam = dto.HomeTeam
 	}
-	if !update.MatchDate.IsZero() {
-		writeModel.MatchDate = update.MatchDate
+	if !dto.MatchDate.IsZero() {
+		writeModel.MatchDate = dto.MatchDate
 	}
 	_, err = db.Collection.ReplaceOne(ctx, bson.D{{Key: "_id", Value: id}}, writeModel)
 
