@@ -44,6 +44,12 @@ tags:
       description: Find out more
       url: https://github.com/random-guys/backend-developer-test#user-types
 
+  - name: fixtures
+    description: Everything about fixtures.
+    externalDocs:
+      description: Find out more
+      url: https://github.com/random-guys/backend-developer-test#user-types
+
 paths:
   /login/admins/:
     post:
@@ -115,7 +121,7 @@ paths:
           $ref: "#/components/responses/unprocessible_entity"
       security:
         - bearer: []
-      summary: Create a new admin account
+      summary: Create a new admin account (admins only)
       tags:
         - admin-accounts
 
@@ -161,15 +167,7 @@ paths:
               $ref: "#/components/schemas/TeamInfo"
       responses:
         201:
-          description: Team added.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/_DataResponse"
-                  - properties:
-                      data:
-                        $ref: "#/components/schemas/Team"
+          $ref: "#/components/responses/team"
         400:
           $ref: "#/components/responses/bad_request"
         401:
@@ -178,7 +176,7 @@ paths:
           $ref: "#/components/responses/unprocessible_entity"
       security:
         - bearer: []
-      summary: Add a new team (restricted to admins)
+      summary: Add a new team (admins only)
       tags:
         - teams
 
@@ -186,22 +184,12 @@ paths:
       operationId: list_teams
       responses:
         200:
-          description: Teams list.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/_DataResponse"
-                  - properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/Team"
+          $ref: "#/components/responses/team_list"
         401:
           $ref: "#/components/responses/unauthorized"
       security:
         - bearer: []
-      summary: List available teams (restricted to admins)
+      summary: List available teams (requires authentication)
       tags:
         - teams
 
@@ -212,26 +200,20 @@ paths:
         schema:
           type: string
         required: true
+
     get:
       operationId: view_team
       responses:
         200:
-          description: Team info.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/_DataResponse"
-                  - properties:
-                      data:
-                        $ref: "#/components/schemas/Team"
+          $ref: "#/components/responses/team"
         401:
           $ref: "#/components/responses/unauthorized"
       security:
         - bearer: []
-      summary: View team info (restricted to admins)
+      summary: View team info (admins only)
       tags:
         - teams
+
     delete:
       operationId: remove_team
       responses:
@@ -241,12 +223,12 @@ paths:
           $ref: "#/components/responses/unauthorized"
       security:
         - bearer: []
-      summary: Remove team (restricted to admins)
+      summary: Remove team (admins only)
       tags:
         - teams
 
     patch:
-      description: Update team info (restricted to admins)
+      description: Update team info (admins only)
       operationId: update_team
       requestBody:
         content:
@@ -255,15 +237,7 @@ paths:
               $ref: "#/components/schemas/TeamInfo"
       responses:
         200:
-          description: Team updated.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/_DataResponse"
-                  - properties:
-                      data:
-                        $ref: "#/components/schemas/Team"
+          $ref: "#/components/responses/team"
         400:
           $ref: "#/components/responses/bad_request"
         401:
@@ -272,12 +246,109 @@ paths:
           $ref: "#/components/responses/unprocessible_entity"
       security:
         - bearer: []
-      summary: Update team info
+      summary: Update team info (admins only)
       tags:
         - teams
 
+  /fixtures/:
+    post:
+      operationId: create_fixture
+      requestBody:
+        $ref: "#/components/requestBodies/fixture_info"
+      responses:
+        201:
+          $ref: "#/components/responses/fixture"
+        400:
+          $ref: "#/components/responses/bad_request"
+        401:
+          $ref: "#/components/responses/unauthorized"
+        422:
+          $ref: "#/components/responses/unprocessible_entity"
+      security:
+        - bearer: []
+      summary: Add a new fixture (admins only)
+      tags:
+        - fixtures
+
+    get:
+      parameters:
+        - name: status
+          in: query
+          schema:
+            enum:
+              - completed
+              - pending
+      operationId: list_fixtures
+      responses:
+        200:
+          $ref: "#/components/responses/fixtures_list"
+        401:
+          $ref: "#/components/responses/unauthorized"
+      security:
+        - bearer: []
+      summary: List available fixtures (requires authentication)
+      tags:
+        - fixtures
+
+  /fixtures/{fixture_id}:
+    parameters:
+      - name: fixture_id
+        in: path
+        schema:
+          type: string
+        required: true
+
+    delete:
+      operationId: remove_fixture
+      responses:
+        200:
+          description: Fixture removed.
+        401:
+          $ref: "#/components/responses/unauthorized"
+      security:
+        - bearer: []
+      summary: Remove fixture (admins only)
+      tags:
+        - fixtures
+
+    patch:
+      description: Update fixture info (restricted to admins)
+      operationId: update_fixture
+      requestBody:
+        $ref: "#/components/requestBodies/fixture_info"
+      responses:
+        200:
+          $ref: "#/components/responses/fixture"
+        400:
+          $ref: "#/components/responses/bad_request"
+        401:
+          $ref: "#/components/responses/unauthorized"
+        422:
+          $ref: "#/components/responses/unprocessible_entity"
+      security:
+        - bearer: []
+      summary: Update fixture info (admins only)
+      tags:
+        - fixtures
+
 components:
-  requestBodies: {}
+  requestBodies:
+    fixture_info:
+      content:
+        application/json:
+          schema:
+            properties:
+              home_team:
+                description: The ID of the home team
+                type: string
+              away_team:
+                description: The ID of the away team
+                type: string
+              match_date:
+                description: The date of the match
+                type: string
+                format: date-time
+      required: true
 
   schemas:
     BasicUserInfo:
@@ -354,6 +425,19 @@ components:
         - $ref: "#/components/schemas/_Entity"
         - $ref: "#/components/schemas/TeamInfo"
 
+    Fixture:
+      description: A match arrangement between teams.
+      allOf:
+        - $ref: "#/components/schemas/_Entity"
+        - properties:
+            home_team:
+              $ref: "#/components/schemas/Team"
+            away_team:
+              $ref: "#/components/schemas/Team"
+            match_date:
+              type: string
+              format: date-time
+
     _DataResponse:
       description: An API response containing data.
       properties:
@@ -416,6 +500,65 @@ components:
                   - target
 
   responses:
+    team:
+      description: Team information
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/_DataResponse"
+              - properties:
+                  data:
+                    $ref: "#/components/schemas/Team"
+                  "@type":
+                    enum:
+                      - "Team"
+
+    team_list:
+      description: Teams list
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/_DataResponse"
+              - properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Team"
+                  "@type":
+                    enum:
+                      - "Teams"
+    fixture:
+      description: Fixture information
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/_DataResponse"
+              - properties:
+                  data:
+                    $ref: "#/components/schemas/Fixture"
+                  "@type":
+                    enum:
+                      - "Fixture"
+
+    fixtures_list:
+      description: Fixtures list
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/_DataResponse"
+              - properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Fixture"
+                  "@type":
+                    enum:
+                      - "Fixtures"
+
     login_response:
       description: Login successful.
       content:
