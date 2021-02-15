@@ -8,7 +8,8 @@ import (
 
 	"gomoney-mock-epl/users"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func adminSignUpHandler(db users.AdminsDB) echo.HandlerFunc {

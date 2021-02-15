@@ -5,7 +5,7 @@ import (
 
 	"gomoney-mock-epl/errors"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 // DefaultErrorHandler formats every error that bubbles up through

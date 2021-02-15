@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 var jwtSigningKey = []byte("R4Hw7tAIUqDVDmOx6Cd64+73PIbHCelQjeAo4eh+PuqKK5G+QhjjKXQAjJoBs8Pu/HTJBpN9OoDhpGIhmpbVIzc1Ygzj+m5Ze+8HfcEEsVq1q9Ec6l+DWWc17Zd730k")

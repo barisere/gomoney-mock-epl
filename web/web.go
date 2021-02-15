@@ -9,7 +9,7 @@ import (
 	"gomoney-mock-epl/teams"
 	"gomoney-mock-epl/users"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
