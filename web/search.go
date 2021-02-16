@@ -33,7 +33,7 @@ func searchTeams(ctx context.Context, db teams.TeamsDB, query string) ([]teams.T
 	teamsCursor, err := db.Find(ctx, q, options.Find().SetProjection(score).SetSort(score))
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
-			return nil, nil
+			return []teams.Team{}, nil
 		}
 		return nil, err
 	}

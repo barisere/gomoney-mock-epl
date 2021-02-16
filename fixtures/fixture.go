@@ -229,7 +229,7 @@ func (db DB) Search(ctx context.Context, query string) ([]Fixture, error) {
 	cursor, err := db.Aggregate(ctx, textSearchQuery(query))
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
-			return nil, nil
+			return []Fixture{}, nil
 		}
 		return nil, err
 	}
