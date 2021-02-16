@@ -12,7 +12,7 @@ externalDocs:
   url: https://github.com/random-guys/backend-developer-test
 
 servers:
-  - url: "https://gomoney-mock-epl.herokuapp.com/"
+  - url: "https://gomoney-mock-epl.herokuapp.com"
     description: Live server on Heroku
   - url: http://localhost:{port}
     description: Local development server
