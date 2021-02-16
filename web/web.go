@@ -62,6 +62,12 @@ func NewApplication(db *mongo.Client, cfg config.Config) (*Application, error) {
 	TeamRoutes(app.TeamsDB)(app.Echo)
 	FixturesRoutes(app.FixturesDB)(app.Echo)
 	searchRoutesProvider(app.TeamsDB, app.FixturesDB)(app.Echo)
+	app.GET("/", func(c echo.Context) error {
+		return c.File("docs/index.html")
+	})
+	app.GET("/openapi.yaml", func(c echo.Context) error {
+		return c.File("docs/openapi.yaml")
+	})
 
 	return app, nil
 }
