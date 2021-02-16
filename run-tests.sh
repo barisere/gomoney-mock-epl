@@ -7,6 +7,8 @@ PORT=8080
 
 export CONTAINER_ID MONGO_URL DEPLOY_ENV PORT
 
+grift db:reindex
+
 go test ./...
 
 docker container kill "${CONTAINER_ID}"

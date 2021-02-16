@@ -1,0 +1,1441 @@
+[
+  {
+    "name": "Arsenal",
+    "club": {
+      "name": "Arsenal",
+      "shortName": "Arsenal",
+      "abbr": "ARS",
+      "id": 1.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Emirates Stadium",
+        "city": "London",
+        "capacity": 60272.0,
+        "source": "OPTA",
+        "id": 52.0
+      },
+      {
+        "name": "Highbury",
+        "city": "London",
+        "source": "OPTA",
+        "id": 302.0
+      }
+    ],
+    "shortName": "Arsenal",
+    "id": 1.0,
+    "altIds": {
+      "opta": "t3"
+    }
+  },
+  {
+    "name": "Aston Villa",
+    "club": {
+      "name": "Aston Villa",
+      "shortName": "Aston Villa",
+      "abbr": "AVL",
+      "id": 2.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Villa Park",
+        "city": "Birmingham",
+        "capacity": 42682.0,
+        "location": {
+          "latitude": 52.5085,
+          "longitude": -1.88495
+        },
+        "source": "OPTA",
+        "id": 43.0
+      }
+    ],
+    "shortName": "Aston Villa",
+    "id": 2.0,
+    "altIds": {
+      "opta": "t7"
+    }
+  },
+  {
+    "name": "Barnsley",
+    "club": {
+      "name": "Barnsley",
+      "shortName": "Barnsley",
+      "abbr": "BAR",
+      "id": 30.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Oakwell",
+        "city": "Barnsley",
+        "capacity": 23009.0,
+        "location": {
+          "latitude": 53.5523,
+          "longitude": -1.46863
+        },
+        "source": "OPTA",
+        "id": 64.0
+      }
+    ],
+    "shortName": "Barnsley",
+    "id": 30.0,
+    "altIds": {
+      "opta": "t37"
+    }
+  },
+  {
+    "name": "Birmingham City",
+    "club": {
+      "name": "Birmingham City",
+      "shortName": "Birmingham",
+      "abbr": "BIR",
+      "id": 35.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "St. Andrew\u0027s Trillion Trophy Stadium",
+        "city": "Birmingham",
+        "location": {
+          "latitude": 52.4756,
+          "longitude": -1.86824
+        },
+        "id": 1739.0
+      }
+    ],
+    "shortName": "Birmingham",
+    "id": 35.0,
+    "altIds": {
+      "opta": "t41"
+    }
+  },
+  {
+    "name": "Blackburn Rovers",
+    "club": {
+      "name": "Blackburn Rovers",
+      "shortName": "Blackburn",
+      "abbr": "BLB",
+      "id": 3.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Ewood Park",
+        "city": "Blackburn",
+        "capacity": 31367.0,
+        "location": {
+          "latitude": 53.7286,
+          "longitude": -2.48941
+        },
+        "source": "OPTA",
+        "id": 5.0
+      }
+    ],
+    "shortName": "Blackburn",
+    "id": 3.0,
+    "altIds": {
+      "opta": "t5"
+    }
+  },
+  {
+    "name": "Blackpool",
+    "club": {
+      "name": "Blackpool",
+      "shortName": "Blackpool",
+      "abbr": "BLP",
+      "id": 44.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Bloomfield Road",
+        "city": "Blackpool",
+        "capacity": 16220.0,
+        "location": {
+          "latitude": 53.8296,
+          "longitude": -3.05569
+        },
+        "source": "OPTA",
+        "id": 210.0
+      }
+    ],
+    "shortName": "Blackpool",
+    "id": 44.0,
+    "altIds": {
+      "opta": "t92"
+    }
+  },
+  {
+    "name": "Bolton Wanderers",
+    "club": {
+      "name": "Bolton Wanderers",
+      "shortName": "Bolton",
+      "abbr": "BOL",
+      "id": 27.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "University of Bolton Stadium",
+        "city": "Bolton",
+        "location": {
+          "latitude": 53.5803,
+          "longitude": -2.53615
+        },
+        "id": 1799.0
+      },
+      {
+        "name": "Burnden Park",
+        "city": "Bolton",
+        "source": "OPTA",
+        "id": 308.0
+      }
+    ],
+    "shortName": "Bolton",
+    "id": 27.0,
+    "altIds": {
+      "opta": "t30"
+    }
+  },
+  {
+    "name": "AFC Bournemouth",
+    "club": {
+      "name": "Bournemouth",
+      "shortName": "Bournemouth",
+      "abbr": "BOU",
+      "id": 127.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Vitality Stadium",
+        "city": "Bournemouth",
+        "capacity": 11464.0,
+        "location": {
+          "latitude": 50.7349,
+          "longitude": -1.83899
+        },
+        "source": "OPTA",
+        "id": 914.0
+      }
+    ],
+    "shortName": "AFC Bournemouth",
+    "id": 127.0,
+    "altIds": {
+      "opta": "t91"
+    }
+  },
+  {
+    "name": "Bradford City",
+    "club": {
+      "name": "Bradford City",
+      "shortName": "Bradford",
+      "abbr": "BRA",
+      "id": 32.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Valley Parade",
+        "city": "Bradford",
+        "capacity": 24000.0,
+        "location": {
+          "latitude": 53.8038,
+          "longitude": -1.75949
+        },
+        "source": "OPTA",
+        "id": 208.0
+      }
+    ],
+    "shortName": "Bradford",
+    "id": 32.0,
+    "altIds": {
+      "opta": "t55"
+    }
+  },
+  {
+    "name": "Brighton and Hove Albion",
+    "club": {
+      "name": "Brighton and Hove Albion",
+      "shortName": "Brighton",
+      "abbr": "BHA",
+      "id": 131.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Amex Stadium",
+        "city": "Falmer",
+        "capacity": 30750.0,
+        "location": {
+          "latitude": 50.8606,
+          "longitude": -0.082237
+        },
+        "source": "OPTA",
+        "id": 1684.0
+      }
+    ],
+    "shortName": "Brighton",
+    "id": 131.0,
+    "altIds": {
+      "opta": "t36"
+    }
+  },
+  {
+    "name": "Burnley",
+    "club": {
+      "name": "Burnley",
+      "shortName": "Burnley",
+      "abbr": "BUR",
+      "id": 43.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Turf Moor",
+        "city": "Burnley",
+        "capacity": 21401.0,
+        "location": {
+          "latitude": 53.7885,
+          "longitude": -2.23149
+        },
+        "source": "OPTA",
+        "id": 47.0
+      }
+    ],
+    "shortName": "Burnley",
+    "id": 43.0,
+    "altIds": {
+      "opta": "t90"
+    }
+  },
+  {
+    "name": "Cardiff City",
+    "club": {
+      "name": "Cardiff City",
+      "shortName": "Cardiff",
+      "abbr": "CAR",
+      "id": 46.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Cardiff City Stadium",
+        "city": "Cardiff",
+        "capacity": 26896.0,
+        "location": {
+          "latitude": 51.4745,
+          "longitude": -3.19981
+        },
+        "source": "OPTA",
+        "id": 41.0
+      }
+    ],
+    "shortName": "Cardiff",
+    "id": 46.0,
+    "altIds": {
+      "opta": "t97"
+    }
+  },
+  {
+    "name": "Charlton Athletic",
+    "club": {
+      "name": "Charlton Athletic",
+      "shortName": "Charlton",
+      "abbr": "CHA",
+      "id": 31.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "The Valley",
+        "city": "London",
+        "capacity": 26875.0,
+        "location": {
+          "latitude": 51.4865,
+          "longitude": 0.035877
+        },
+        "source": "OPTA",
+        "id": 63.0
+      }
+    ],
+    "shortName": "Charlton",
+    "id": 31.0,
+    "altIds": {
+      "opta": "t33"
+    }
+  },
+  {
+    "name": "Chelsea",
+    "club": {
+      "name": "Chelsea",
+      "shortName": "Chelsea",
+      "abbr": "CHE",
+      "id": 4.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Stamford Bridge",
+        "city": "London",
+        "capacity": 41798.0,
+        "location": {
+          "latitude": 51.4816,
+          "longitude": -0.191016
+        },
+        "source": "OPTA",
+        "id": 30.0
+      }
+    ],
+    "shortName": "Chelsea",
+    "id": 4.0,
+    "altIds": {
+      "opta": "t8"
+    }
+  },
+  {
+    "name": "Coventry City",
+    "club": {
+      "name": "Coventry City",
+      "shortName": "Coventry",
+      "abbr": "COV",
+      "id": 5.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Highfield Road",
+        "city": "Coventry",
+        "source": "OPTA",
+        "id": 303.0
+      }
+    ],
+    "shortName": "Coventry",
+    "id": 5.0,
+    "altIds": {
+      "opta": "t9"
+    }
+  },
+  {
+    "name": "Crystal Palace",
+    "club": {
+      "name": "Crystal Palace",
+      "shortName": "Crystal Palace",
+      "abbr": "CRY",
+      "id": 6.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Selhurst Park",
+        "city": "London",
+        "capacity": 25073.0,
+        "location": {
+          "latitude": 51.3979,
+          "longitude": -0.085923
+        },
+        "source": "OPTA",
+        "id": 45.0
+      }
+    ],
+    "shortName": "Crystal Palace",
+    "id": 6.0,
+    "altIds": {
+      "opta": "t31"
+    }
+  },
+  {
+    "name": "Derby County",
+    "club": {
+      "name": "Derby County",
+      "shortName": "Derby",
+      "abbr": "DER",
+      "id": 28.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Pride Park Stadium",
+        "city": "Derby",
+        "location": {
+          "latitude": 52.9146,
+          "longitude": -1.44802
+        },
+        "source": "OPTA",
+        "id": 929.0
+      },
+      {
+        "name": "Baseball Ground",
+        "city": "Derby",
+        "source": "OPTA",
+        "id": 309.0
+      }
+    ],
+    "shortName": "Derby",
+    "id": 28.0,
+    "altIds": {
+      "opta": "t24"
+    }
+  },
+  {
+    "name": "Everton",
+    "club": {
+      "name": "Everton",
+      "shortName": "Everton",
+      "abbr": "EVE",
+      "id": 7.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Goodison Park",
+        "city": "Liverpool",
+        "capacity": 39571.0,
+        "location": {
+          "latitude": 53.4387,
+          "longitude": -2.96639
+        },
+        "source": "OPTA",
+        "id": 31.0
+      }
+    ],
+    "shortName": "Everton",
+    "id": 7.0,
+    "altIds": {
+      "opta": "t11"
+    }
+  },
+  {
+    "name": "Fulham",
+    "club": {
+      "name": "Fulham",
+      "shortName": "Fulham",
+      "abbr": "FUL",
+      "id": 34.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Craven Cottage",
+        "city": "London",
+        "capacity": 25700.0,
+        "location": {
+          "latitude": 51.4745,
+          "longitude": -0.220993
+        },
+        "source": "OPTA",
+        "id": 16.0
+      },
+      {
+        "name": "Loftus Road",
+        "city": "London",
+        "capacity": 18360.0,
+        "location": {
+          "latitude": 51.5097,
+          "longitude": -0.232037
+        },
+        "source": "OPTA",
+        "id": 15.0
+      }
+    ],
+    "shortName": "Fulham",
+    "id": 34.0,
+    "altIds": {
+      "opta": "t54"
+    }
+  },
+  {
+    "name": "Huddersfield Town",
+    "club": {
+      "name": "Huddersfield Town",
+      "shortName": "Huddersfield",
+      "abbr": "HUD",
+      "id": 159.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "John Smith\u0027s Stadium",
+        "city": "Huddersfield",
+        "capacity": 24500.0,
+        "location": {
+          "latitude": 53.6539,
+          "longitude": -1.76906
+        },
+        "source": "OPTA",
+        "id": 65.0
+      }
+    ],
+    "shortName": "Huddersfield",
+    "id": 159.0,
+    "altIds": {
+      "opta": "t38"
+    }
+  },
+  {
+    "name": "Hull City",
+    "club": {
+      "name": "Hull City",
+      "shortName": "Hull",
+      "abbr": "HUL",
+      "id": 41.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "KCOM Stadium",
+        "city": "Hull",
+        "capacity": 25400.0,
+        "location": {
+          "latitude": 53.746,
+          "longitude": -0.367677
+        },
+        "source": "OPTA",
+        "id": 441.0
+      }
+    ],
+    "shortName": "Hull",
+    "id": 41.0,
+    "altIds": {
+      "opta": "t88"
+    }
+  },
+  {
+    "name": "Ipswich Town",
+    "club": {
+      "name": "Ipswich Town",
+      "shortName": "Ipswich",
+      "abbr": "IPS",
+      "id": 8.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Portman Road",
+        "city": "Ipswich",
+        "capacity": 30300.0,
+        "location": {
+          "latitude": 52.0542,
+          "longitude": 1.14471
+        },
+        "source": "OPTA",
+        "id": 66.0
+      }
+    ],
+    "shortName": "Ipswich",
+    "id": 8.0,
+    "altIds": {
+      "opta": "t40"
+    }
+  },
+  {
+    "name": "Leeds United",
+    "club": {
+      "name": "Leeds United",
+      "shortName": "Leeds",
+      "abbr": "LEE",
+      "id": 9.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Elland Road",
+        "city": "Leeds",
+        "capacity": 40000.0,
+        "location": {
+          "latitude": 53.7772,
+          "longitude": -1.57153
+        },
+        "source": "OPTA",
+        "id": 205.0
+      }
+    ],
+    "shortName": "Leeds",
+    "id": 9.0,
+    "altIds": {
+      "opta": "t2"
+    }
+  },
+  {
+    "name": "Leicester City",
+    "club": {
+      "name": "Leicester City",
+      "shortName": "Leicester",
+      "abbr": "LEI",
+      "id": 26.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "King Power Stadium",
+        "city": "Leicester",
+        "capacity": 32312.0,
+        "location": {
+          "latitude": 52.62,
+          "longitude": -1.1415
+        },
+        "source": "OPTA",
+        "id": 49.0
+      },
+      {
+        "name": "Filbert Street",
+        "city": "Leicester",
+        "source": "OPTA",
+        "id": 307.0
+      }
+    ],
+    "shortName": "Leicester",
+    "id": 26.0,
+    "altIds": {
+      "opta": "t13"
+    }
+  },
+  {
+    "name": "Liverpool",
+    "club": {
+      "name": "Liverpool",
+      "shortName": "Liverpool",
+      "abbr": "LIV",
+      "id": 10.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Anfield",
+        "city": "Liverpool",
+        "capacity": 54074.0,
+        "location": {
+          "latitude": 53.4313,
+          "longitude": -2.96158
+        },
+        "source": "OPTA",
+        "id": 901.0
+      }
+    ],
+    "shortName": "Liverpool",
+    "id": 10.0,
+    "altIds": {
+      "opta": "t14"
+    }
+  },
+  {
+    "name": "Manchester City",
+    "club": {
+      "name": "Manchester City",
+      "shortName": "Man City",
+      "abbr": "MCI",
+      "id": 11.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Etihad Stadium",
+        "city": "Manchester",
+        "capacity": 55000.0,
+        "location": {
+          "latitude": 53.4832,
+          "longitude": -2.20042
+        },
+        "source": "OPTA",
+        "id": 457.0
+      },
+      {
+        "name": "Maine Road",
+        "city": "Manchester",
+        "source": "OPTA",
+        "id": 305.0
+      }
+    ],
+    "shortName": "Man City",
+    "id": 11.0,
+    "altIds": {
+      "opta": "t43"
+    }
+  },
+  {
+    "name": "Manchester United",
+    "club": {
+      "name": "Manchester United",
+      "shortName": "Man Utd",
+      "abbr": "MUN",
+      "id": 12.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Old Trafford",
+        "city": "Manchester",
+        "capacity": 75635.0,
+        "location": {
+          "latitude": 53.4626,
+          "longitude": -2.29103
+        },
+        "source": "OPTA",
+        "id": 42.0
+      }
+    ],
+    "shortName": "Man Utd",
+    "id": 12.0,
+    "altIds": {
+      "opta": "t1"
+    }
+  },
+  {
+    "name": "Middlesbrough",
+    "club": {
+      "name": "Middlesbrough",
+      "shortName": "Middlesbrough",
+      "abbr": "MID",
+      "id": 13.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Riverside Stadium",
+        "city": "Middlesbrough",
+        "location": {
+          "latitude": 54.5781,
+          "longitude": -1.21776
+        },
+        "source": "OPTA",
+        "id": 314.0
+      },
+      {
+        "name": "Ayresome Park",
+        "city": "Middlesbrough",
+        "source": "OPTA",
+        "id": 306.0
+      }
+    ],
+    "shortName": "Middlesbrough",
+    "id": 13.0,
+    "altIds": {
+      "opta": "t25"
+    }
+  },
+  {
+    "name": "Newcastle United",
+    "club": {
+      "name": "Newcastle United",
+      "shortName": "Newcastle",
+      "abbr": "NEW",
+      "id": 23.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "St. James\u0027 Park",
+        "city": "Newcastle",
+        "capacity": 52405.0,
+        "location": {
+          "latitude": 54.9752,
+          "longitude": -1.62235
+        },
+        "source": "OPTA",
+        "id": 27.0
+      }
+    ],
+    "shortName": "Newcastle",
+    "id": 23.0,
+    "altIds": {
+      "opta": "t4"
+    }
+  },
+  {
+    "name": "Norwich City",
+    "club": {
+      "name": "Norwich City",
+      "shortName": "Norwich",
+      "abbr": "NOR",
+      "id": 14.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Carrow Road",
+        "city": "Norwich",
+        "capacity": 27244.0,
+        "location": {
+          "latitude": 52.6224,
+          "longitude": 1.3086
+        },
+        "source": "OPTA",
+        "id": 34.0
+      }
+    ],
+    "shortName": "Norwich",
+    "id": 14.0,
+    "altIds": {
+      "opta": "t45"
+    }
+  },
+  {
+    "name": "Nottingham Forest",
+    "club": {
+      "name": "Nottingham Forest",
+      "shortName": "Nott\u0027m Forest",
+      "abbr": "NFO",
+      "id": 15.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "City Ground",
+        "city": "Nottingham",
+        "capacity": 30602.0,
+        "location": {
+          "latitude": 52.9396,
+          "longitude": -1.13258
+        },
+        "source": "OPTA",
+        "id": 59.0
+      }
+    ],
+    "shortName": "Nott\u0027m Forest",
+    "id": 15.0,
+    "altIds": {
+      "opta": "t17"
+    }
+  },
+  {
+    "name": "Oldham Athletic",
+    "club": {
+      "name": "Oldham Athletic",
+      "shortName": "Oldham",
+      "abbr": "OLD",
+      "id": 16.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Boundary Park",
+        "city": "Oldham",
+        "capacity": 13559.0,
+        "location": {
+          "latitude": 53.5546,
+          "longitude": -1.1361
+        },
+        "source": "OPTA",
+        "id": 83.0
+      }
+    ],
+    "shortName": "Oldham",
+    "id": 16.0,
+    "altIds": {
+      "opta": "t105"
+    }
+  },
+  {
+    "name": "Portsmouth",
+    "club": {
+      "name": "Portsmouth",
+      "shortName": "Portsmouth",
+      "abbr": "POR",
+      "id": 37.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Fratton Park",
+        "city": "Portsmouth",
+        "capacity": 20224.0,
+        "location": {
+          "latitude": 50.7959,
+          "longitude": -1.06368
+        },
+        "source": "OPTA",
+        "id": 70.0
+      }
+    ],
+    "shortName": "Portsmouth",
+    "id": 37.0,
+    "altIds": {
+      "opta": "t47"
+    }
+  },
+  {
+    "name": "Queens Park Rangers",
+    "club": {
+      "name": "Queens Park Rangers",
+      "shortName": "QPR",
+      "abbr": "QPR",
+      "id": 17.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Loftus Road",
+        "city": "London",
+        "capacity": 18000.0,
+        "location": {
+          "latitude": 51.5097,
+          "longitude": -0.232037
+        },
+        "source": "OPTA",
+        "id": 46.0
+      }
+    ],
+    "shortName": "QPR",
+    "id": 17.0,
+    "altIds": {
+      "opta": "t52"
+    }
+  },
+  {
+    "name": "Reading",
+    "club": {
+      "name": "Reading",
+      "shortName": "Reading",
+      "abbr": "RDG",
+      "id": 40.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Madejski Stadium",
+        "city": "Reading",
+        "capacity": 24161.0,
+        "location": {
+          "latitude": 51.4223,
+          "longitude": -0.983497
+        },
+        "source": "OPTA",
+        "id": 24.0
+      }
+    ],
+    "shortName": "Reading",
+    "id": 40.0,
+    "altIds": {
+      "opta": "t108"
+    }
+  },
+  {
+    "name": "Sheffield United",
+    "club": {
+      "name": "Sheffield United",
+      "shortName": "Sheffield Utd",
+      "abbr": "SHU",
+      "id": 18.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Bramall Lane",
+        "city": "Sheffield",
+        "capacity": 30370.0,
+        "location": {
+          "latitude": 53.3699,
+          "longitude": -1.47067
+        },
+        "source": "OPTA",
+        "id": 206.0
+      }
+    ],
+    "shortName": "Sheffield Utd",
+    "id": 18.0,
+    "altIds": {
+      "opta": "t49"
+    }
+  },
+  {
+    "name": "Sheffield Wednesday",
+    "club": {
+      "name": "Sheffield Wednesday",
+      "shortName": "Sheffield Wed",
+      "abbr": "SHW",
+      "id": 19.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Hillsborough",
+        "city": "Sheffield",
+        "capacity": 39859.0,
+        "location": {
+          "latitude": 53.4109,
+          "longitude": -1.50086
+        },
+        "source": "OPTA",
+        "id": 60.0
+      }
+    ],
+    "shortName": "Sheffield Wed",
+    "id": 19.0,
+    "altIds": {
+      "opta": "t19"
+    }
+  },
+  {
+    "name": "Southampton",
+    "club": {
+      "name": "Southampton",
+      "shortName": "Southampton",
+      "abbr": "SOU",
+      "id": 20.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "St. Mary\u0027s Stadium",
+        "city": "Southampton",
+        "capacity": 32505.0,
+        "location": {
+          "latitude": 50.9065,
+          "longitude": -1.39082
+        },
+        "source": "OPTA",
+        "id": 48.0
+      },
+      {
+        "name": "The Dell",
+        "city": "Southampton",
+        "source": "OPTA",
+        "id": 304.0
+      }
+    ],
+    "shortName": "Southampton",
+    "id": 20.0,
+    "altIds": {
+      "opta": "t20"
+    }
+  },
+  {
+    "name": "Stoke City",
+    "club": {
+      "name": "Stoke City",
+      "shortName": "Stoke",
+      "abbr": "STK",
+      "id": 42.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "bet365 Stadium",
+        "city": "Stoke",
+        "capacity": 27740.0,
+        "location": {
+          "latitude": 52.9886,
+          "longitude": -2.17469
+        },
+        "source": "OPTA",
+        "id": 435.0
+      }
+    ],
+    "shortName": "Stoke",
+    "id": 42.0,
+    "altIds": {
+      "opta": "t110"
+    }
+  },
+  {
+    "name": "Sunderland",
+    "club": {
+      "name": "Sunderland",
+      "shortName": "Sunderland",
+      "abbr": "SUN",
+      "id": 29.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Stadium of Light",
+        "city": "Sunderland",
+        "capacity": 48707.0,
+        "location": {
+          "latitude": 54.9141,
+          "longitude": -1.3893
+        },
+        "source": "OPTA",
+        "id": 35.0
+      },
+      {
+        "name": "Roker Park",
+        "city": "Sunderland",
+        "source": "OPTA",
+        "id": 310.0
+      }
+    ],
+    "shortName": "Sunderland",
+    "id": 29.0,
+    "altIds": {
+      "opta": "t56"
+    }
+  },
+  {
+    "name": "Swansea City",
+    "club": {
+      "name": "Swansea City",
+      "shortName": "Swansea",
+      "abbr": "SWA",
+      "id": 45.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Liberty Stadium",
+        "city": "Swansea",
+        "capacity": 21028.0,
+        "location": {
+          "latitude": 51.6422,
+          "longitude": -3.93512
+        },
+        "source": "OPTA",
+        "id": 86.0
+      }
+    ],
+    "shortName": "Swansea",
+    "id": 45.0,
+    "altIds": {
+      "opta": "t80"
+    }
+  },
+  {
+    "name": "Swindon Town",
+    "club": {
+      "name": "Swindon Town",
+      "shortName": "Swindon",
+      "abbr": "SWI",
+      "id": 24.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "County Ground",
+        "city": "Swindon",
+        "capacity": 15728.0,
+        "location": {
+          "latitude": 51.5644,
+          "longitude": -1.77152
+        },
+        "source": "OPTA",
+        "id": 69.0
+      }
+    ],
+    "shortName": "Swindon",
+    "id": 24.0,
+    "altIds": {
+      "opta": "t46"
+    }
+  },
+  {
+    "name": "Tottenham Hotspur",
+    "club": {
+      "name": "Tottenham Hotspur",
+      "shortName": "Spurs",
+      "abbr": "TOT",
+      "id": 21.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Tottenham Hotspur Stadium",
+        "city": "London",
+        "source": "OPTA",
+        "id": 1734.0
+      },
+      {
+        "name": "Wembley Stadium",
+        "city": "London",
+        "capacity": 90000.0,
+        "location": {
+          "latitude": 51.556,
+          "longitude": -0.279519
+        },
+        "source": "OPTA",
+        "id": 845.0
+      },
+      {
+        "name": "White Hart Lane",
+        "city": "London",
+        "capacity": 36284.0,
+        "location": {
+          "latitude": 51.6031,
+          "longitude": -0.0676
+        },
+        "source": "OPTA",
+        "id": 28.0
+      }
+    ],
+    "shortName": "Spurs",
+    "id": 21.0,
+    "altIds": {
+      "opta": "t6"
+    }
+  },
+  {
+    "name": "Watford",
+    "club": {
+      "name": "Watford",
+      "shortName": "Watford",
+      "abbr": "WAT",
+      "id": 33.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Vicarage Road",
+        "city": "Watford",
+        "capacity": 22000.0,
+        "location": {
+          "latitude": 51.6496,
+          "longitude": -0.401731
+        },
+        "source": "OPTA",
+        "id": 136.0
+      }
+    ],
+    "shortName": "Watford",
+    "id": 33.0,
+    "altIds": {
+      "opta": "t57"
+    }
+  },
+  {
+    "name": "West Bromwich Albion",
+    "club": {
+      "name": "West Bromwich Albion",
+      "shortName": "West Brom",
+      "abbr": "WBA",
+      "id": 36.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "The Hawthorns",
+        "city": "West Bromwich",
+        "capacity": 26445.0,
+        "location": {
+          "latitude": 52.5099,
+          "longitude": -1.9638
+        },
+        "source": "OPTA",
+        "id": 33.0
+      }
+    ],
+    "shortName": "West Brom",
+    "id": 36.0,
+    "altIds": {
+      "opta": "t35"
+    }
+  },
+  {
+    "name": "West Ham United",
+    "club": {
+      "name": "West Ham United",
+      "shortName": "West Ham",
+      "abbr": "WHU",
+      "id": 25.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "London Stadium",
+        "city": "London",
+        "source": "OPTA",
+        "id": 433.0
+      },
+      {
+        "name": "Boleyn Ground",
+        "city": "London",
+        "capacity": 35345.0,
+        "location": {
+          "latitude": 51.5317,
+          "longitude": 0.038316
+        },
+        "source": "OPTA",
+        "id": 44.0
+      }
+    ],
+    "shortName": "West Ham",
+    "id": 25.0,
+    "altIds": {
+      "opta": "t21"
+    }
+  },
+  {
+    "name": "Wigan Athletic",
+    "club": {
+      "name": "Wigan Athletic",
+      "shortName": "Wigan",
+      "abbr": "WIG",
+      "id": 39.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "DW Stadium",
+        "city": "Wigan",
+        "capacity": 25138.0,
+        "location": {
+          "latitude": 53.5472,
+          "longitude": -2.65452
+        },
+        "source": "OPTA",
+        "id": 2.0
+      }
+    ],
+    "shortName": "Wigan",
+    "id": 39.0,
+    "altIds": {
+      "opta": "t111"
+    }
+  },
+  {
+    "name": "Wimbledon",
+    "club": {
+      "name": "Wimbledon",
+      "shortName": "Wimbledon",
+      "abbr": "WIM",
+      "id": 22.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Selhurst Park",
+        "city": "London",
+        "capacity": 26255.0,
+        "location": {
+          "latitude": 51.3979,
+          "longitude": -0.085923
+        },
+        "source": "OPTA",
+        "id": 32.0
+      }
+    ],
+    "shortName": "Wimbledon",
+    "id": 22.0,
+    "altIds": {
+      "opta": "t1736"
+    }
+  },
+  {
+    "name": "Wolverhampton Wanderers",
+    "club": {
+      "name": "Wolverhampton Wanderers",
+      "shortName": "Wolves",
+      "abbr": "WOL",
+      "id": 38.0
+    },
+    "teamType": "FIRST",
+    "grounds": [
+      {
+        "name": "Molineux Stadium",
+        "city": "Wolverhampton",
+        "capacity": 31500.0,
+        "location": {
+          "latitude": 52.5904,
+          "longitude": -2.13077
+        },
+        "source": "OPTA",
+        "id": 913.0
+      }
+    ],
+    "shortName": "Wolves",
+    "id": 38.0,
+    "altIds": {
+      "opta": "t39"
+    }
+  }
+]

@@ -31,8 +31,7 @@ func ConnectToDB(mongoURL string) (*mongo.Client, error) {
 		return nil, err
 	}
 
-	defaultDB := client.Database(MockEPLDatabase)
-	return client, createIndexes(defaultDB)
+	return client, nil
 }
 
 var unique = true
@@ -92,7 +91,7 @@ var fixturesIndexModel = mongo.IndexModel{
 	},
 }
 
-func createIndexes(db *mongo.Database) error {
+func CreateIndexes(db *mongo.Database) error {
 	ctx := context.Background()
 	adminIndexes := db.Collection(AdminsCollection).Indexes()
 	adminIndexes.DropAll(ctx)

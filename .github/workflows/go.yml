@@ -31,5 +31,8 @@ jobs:
       - name: Build
         run: go build -v .
 
+      - name: Create database indexes
+        run: grift db:reindex
+
       - name: Run tests
         run: go test -v ./...
