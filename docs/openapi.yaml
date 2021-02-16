@@ -332,7 +332,7 @@ paths:
       tags:
         - fixtures
 
-  /search/:
+  /search:
     get:
       description: Search for teams and fixtures that match a query.
       operationId: search
