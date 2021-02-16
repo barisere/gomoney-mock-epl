@@ -28,6 +28,9 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
+      - name: Fetch and install dependencies
+        run: go get -v
+
       - name: Build
         run: go build -v .
 
