@@ -57,10 +57,10 @@ func NewApplication(db *mongo.Client, cfg config.Config) (*Application, error) {
 		FixturesDB: fixturesDB,
 	}
 
-	AdminSignupRoute(app.AdminDB)(app.Echo)
-	UserAuthRoute(app.UsersDB)(app.Echo)
-	TeamRoutes(app.TeamsDB)(app.Echo)
-	FixturesRoutes(app.FixturesDB)(app.Echo)
+	adminAuthRoutesProvider(app.AdminDB)(app.Echo)
+	userAuthRoutesProvider(app.UsersDB)(app.Echo)
+	teamRoutesProvider(app.TeamsDB)(app.Echo)
+	fixturesRoutesProvider(app.FixturesDB)(app.Echo)
 	searchRoutesProvider(app.TeamsDB, app.FixturesDB)(app.Echo)
 	app.GET("/", func(c echo.Context) error {
 		return c.File("docs/index.html")

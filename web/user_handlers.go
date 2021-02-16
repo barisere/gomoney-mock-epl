@@ -64,7 +64,7 @@ func adminLoginHandler(db users.AdminsDB) echo.HandlerFunc {
 	}
 }
 
-func AdminSignupRoute(db users.AdminsDB) RouteProvider {
+func adminAuthRoutesProvider(db users.AdminsDB) RouteProvider {
 	return func(e *echo.Echo) {
 		e.POST("/signup/admins/", adminSignUpHandler(db), jwtMiddleware, onlyAdmins)
 		e.POST("/login/admins/", adminLoginHandler(db))
@@ -119,7 +119,7 @@ func userLoginHandler(db users.UsersDB) echo.HandlerFunc {
 	}
 }
 
-func UserAuthRoute(db users.UsersDB) RouteProvider {
+func userAuthRoutesProvider(db users.UsersDB) RouteProvider {
 	rateLimiter := middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(5))
 	return func(e *echo.Echo) {
 		e.POST("/signup/users/", userSignUpHandler(db), rateLimiter)

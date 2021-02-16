@@ -127,7 +127,7 @@ func viewTeam(db teams.TeamsDB) echo.HandlerFunc {
 			dataResponse("Team", fmt.Sprintf("Team: %q", team.Name), team))
 	}
 }
-func TeamRoutes(db teams.TeamsDB) RouteProvider {
+func teamRoutesProvider(db teams.TeamsDB) RouteProvider {
 	return func(e *echo.Echo) {
 		teams := e.Group("/teams", jwtMiddleware)
 		teams.POST("/", createTeam(db), onlyAdmins)

@@ -90,7 +90,7 @@ func viewFixture(db fixtures.DB) echo.HandlerFunc {
 	}
 }
 
-func FixturesRoutes(db fixtures.DB) RouteProvider {
+func fixturesRoutesProvider(db fixtures.DB) RouteProvider {
 	return func(e *echo.Echo) {
 		fixturesRoutes := e.Group("/fixtures", jwtMiddleware)
 		fixturesRoutes.POST("/", createFixture(db), onlyAdmins)
