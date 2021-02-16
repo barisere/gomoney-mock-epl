@@ -9,4 +9,5 @@ RUN go get -v github.com/markbates/grift
 FROM alpine
 
 COPY --from=builder /gomoney/mock-epl .
+COPY docs/ .
 CMD [ "./mock-epl" ]
