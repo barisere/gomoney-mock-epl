@@ -354,6 +354,9 @@ paths:
                           - SearchResults
                       data:
                         properties:
+                          query:
+                            description: The search query
+                            type: string
                           teams:
                             type: array
                             items:
@@ -363,6 +366,7 @@ paths:
                             items:
                               $ref: "#/components/schemas/Fixture"
                         required:
+                          - query
                           - teams
                           - fixtures
           description: Faceted search results
