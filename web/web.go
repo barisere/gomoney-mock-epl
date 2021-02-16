@@ -44,7 +44,7 @@ func NewApplication(db *mongo.Client, cfg config.Config) (*Application, error) {
 		middleware.CORS(),
 		middleware.BodyLimit("8K"))
 	e.HTTPErrorHandler = DefaultErrorHandler
-	e.Server.Addr = fmt.Sprintf(":%d", cfg.HttpBindPort)
+	e.Server.Addr = fmt.Sprintf("0.0.0.0:%d", cfg.HttpBindPort)
 
 	app := &Application{
 		AdminDB:    adminsDB,
